@@ -1,10 +1,14 @@
 # Adversarial Examples Digest
 
-## [Intriguing properties of neural networks (Christian Szegedy et al)](https://arxiv.org/abs/1312.6199)
+## [Intriguing properties of neural networks](https://arxiv.org/abs/1312.6199)
 
-Time to read: 105 mins
+**Time to read:** 105 mins
 
-Easy to read: Yes
+**Easy to read:** Yes
+
+**Author:** Christian Szegedy et al
+
+**Year of Submission:** 2014
 
 ### What problem does it solve?
 
@@ -18,7 +22,7 @@ Interpretability of neural networks.
 
 * Maximum stimulation in a random basis.
 
-* Make small peturbations to the input image which are visually similar but increase. 
+* Make small peturbations to the input image which are visually similar but increase the classification error. 
 
 ### How is this paper novel?
 
