@@ -1,8 +1,9 @@
 # Adversarial Examples Digest
 
-## Intriguing properties of neural networks (Christian Szegedy et al)
+## [Intriguing properties of neural networks (Christian Szegedy et al)](https://arxiv.org/abs/1312.6199)
 
 Time to read: 105 mins
+
 Easy to read: Yes
 
 ### What problem does it solve?
