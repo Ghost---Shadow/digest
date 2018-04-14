@@ -23,19 +23,61 @@ arXiv preprint arXiv:1612.00404, 2016.
 A. Newell, K. Yang, and J. Deng. Stacked hourglass networks
 for human pose estimation. In ECCV, 2016.
 
-I. Kemelmacher-Shlizerman and R. Basri. 3d face reconstruction
-from a single image using a single reference face
-shape. IEEE TPAMI, 33(2):394–405, 2011.
-
-I. Kemelmacher-Shlizerman and S. M. Seitz. Face reconstruction
-in the wild. In ICCV, 2011.
-
 S. Suwajanakorn, I. Kemelmacher-Shlizerman, and S. M.
 Seitz. Total moving face reconstruction. In ECCV, 2014.
 
 J. Roth, Y. Tong, and X. Liu. Adaptive 3d face reconstruction
 from unconstrained photo collections. In CVPR, 2016.
 
-S. Romdhani and T. Vetter. Estimating 3d shape and texture
-using pixel intensity, edges, specular highlights, texture
-constraints and a prior. In CVPR, 2005.
+-------------------------------------------------------------------
+
+C. B. Choy, D. Xu, J. Gwak, K. Chen, and S. Savarese. 3dr2n2:
+A unified approach for single and multi-view 3d object
+reconstruction. In European Conference on Computer Vision
+(ECCV), 2016
+
+A. Dosovitskiy, J. T. Springenberg, M. Tatarchenko, and
+T. Brox. Learning to generate chairs, tables and cars with
+convolutional networks. IEEE transactions on pattern analysis
+and machine intelligence (TPAMI), 2017.
+
+R. Girdhar, D. F. Fouhey, M. Rodriguez, and A. Gupta.
+Learning a predictable and generative vector representation
+for objects. In European Conference on Computer Vision
+(ECCV), 2016.
+
+C. H¨ane, N. Savinov, and M. Pollefeys. Class specific 3d
+object shape priors using surface normals. In Conference on
+Computer Vision and Pattern Recognition (CVPR), 2014
+
+E. Ilg, N. Mayer, T. Saikia, M. Keuper, A. Dosovitskiy, and
+T. Brox. Flownet 2.0: Evolution of optical flow estimation
+with deep networks. arXiv preprint arXiv:1612.01925, 2016.
+
+A. Kar, S. Tulsiani, J. Carreira, and J. Malik. Categoryspecific
+object reconstruction from a single image. In
+Conference on Computer Vision and Pattern Recognition
+(CVPR), 2015
+
+D. J. Rezende, S. A. Eslami, S. Mohamed, P. Battaglia,
+M. Jaderberg, and N. Heess. Unsupervised learning of 3d
+structure from images. In Advances In Neural Information
+Processing Systems (NIPS), 2016.
+
+G. Riegler, A. O. Ulusoys, and A. Geiger. Octnet: Learning
+deep 3d representations at high resolutions. arXiv preprint
+arXiv:1611.05009, 2016
+
+M. Tatarchenko, A. Dosovitskiy, and T. Brox. Multi-view 3d
+models from single images with a convolutional network. In
+European Conference on Computer Vision (ECCV), 2016
+
+S. Tulsiani, H. Su, L. J. Guibas, A. A. Efros, and J. Malik.
+Learning shape abstractions by assembling volumetric
+primitives. In Conference on Computer Vision and Pattern
+Recognition (CVPR), 2017.
+
+X. Yan, J. Yang, E. Yumer, Y. Guo, and H. Lee. Perspective
+transformer nets: Learning single-view 3d object reconstruction
+without 3d supervision. In Advances in Neural Information
+Processing Systems, 2016

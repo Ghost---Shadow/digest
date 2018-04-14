@@ -67,3 +67,75 @@ Regresses to a much larger volumetric resolution.
 2. Predict the height deltas betwen the generated and target images instead of the height in one go.
 3. Semantically label parts of the face and then use texture super resolution. The super resolution generating model would get both the semantic label and the low resoluion texture. This enables the usage of a much smaller model and kernel apertures. 
 4. Make the edges in the generated topology align with the global coordinates.
+
+## [Hierarchical Surface Prediction for 3D Object Reconstruction](https://arxiv.org/abs/1704.00710)
+
+**Source Code:** [???]()
+
+**Datasets:** [Shapenet](https://shapenet.org/) (Aeroplanes, Chairs and Cars)
+
+**Time to read:** 200
+
+**Easy to read?:** Easy (Moderate notation usage)
+
+**Author:** Christian Hane et al
+
+**Year of Submission:** 2017
+
+### What problem does it solve?
+
+It generates voxels from a single 2D image. Surface area increases quadratically while volume increases cubically so a very large number of voxels are "uninteresting".
+
+### How does it solve it?
+
+#### Overview 
+
+1. Label a voxel grid into three (free space, boundary and occupied)
+
+2. Divide the boundary voxels using octrees and repeat
+
+3. The division is also done by a factor of 2 to increase resolution
+
+Block size (Conv apperture) = 16
+
+Tree depth = 5
+
+#### Model
+
+1. Conv encoder encodes the color OR depth image OR low res 3D volume to 128 dimensions
+2. Conv decoder decodes it to a voxel grid with labels, outside, inside and boundary
+3. A threshold parameter is used to differentiate between free and filled voxels
+4. The generated low res voxel map is sent through another upsampler this upsampler only upsamples voxels on boundary regions. It is also supplied with padding around the boundary regions such that the voxel regions overlap. This allows smoother results.
+5. A mesh is generated using marching cubes
+
+There is supervision for each level of the tree (upsampling)
+
+#### Training
+
+In the beginning of training the number of false positives are very high. So, the deep layers are not evaluated. As the validation loss decreases, the next layer is allowed to be trained. This ensures that all levels of the tree eventually get trained.
+
+#### Voxelization (Dataset generation)
+
+1. A low res voxel map is generated.
+2. Outermost layer is eroded.
+3. A next higher layer voxel map is generated
+
+### How is this paper novel?
+
+Other approaches predict only a coarse resolution voxel grid. They directly minimize reprojection errors.
+
+### Key takeaways
+
+### What I still do not understand?
+
+1. What is implicit volumetric reconstruction?
+
+2. Delaunay tedrahedrization.
+
+### Ideas to pursue
+
+1. Use three.js to feed live data to tensorflow.js
+
+2. Allow the model to move the camera around
+
+3. Orthogonal autoencoders for facial morphs
