@@ -81,3 +81,10 @@ X. Yan, J. Yang, E. Yumer, Y. Guo, and H. Lee. Perspective
 transformer nets: Learning single-view 3d object reconstruction
 without 3d supervision. In Advances in Neural Information
 Processing Systems, 2016
+
+-------------------------------------------------------------------
+
+V. V. Kniaz. A photogrammetric technique for generation
+of an accurate multispectral optical flow dataset. In F. Remondino
+and M. R. Shortis, editors, SPIE Optical Metrology,
+pages 103320G–12. SPIE, June 2017.

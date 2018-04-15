@@ -74,7 +74,7 @@ Regresses to a much larger volumetric resolution.
 
 **Datasets:** [Shapenet](https://shapenet.org/) (Aeroplanes, Chairs and Cars)
 
-**Time to read:** 200
+**Time to read:** 200 mins
 
 **Easy to read?:** Easy (Moderate notation usage)
 
@@ -139,3 +139,74 @@ Other approaches predict only a coarse resolution voxel grid. They directly mini
 2. Allow the model to move the camera around
 
 3. Orthogonal autoencoders for facial morphs
+
+## [Deep Learning of Convolutional Auto-encoder for Image Matching and 3D Object Reconstruction in the Infrared Range](http://openaccess.thecvf.com/content_ICCV_2017_workshops/papers/w31/Knyaz_Deep_Learning_of_ICCV_2017_paper.pdf)
+
+**Source Code:** [???]()
+
+**Datasets:** [multi-view stereo infrared imagery dataset](http://www.zefirus.org/mvsir17)
+
+**Time to read:** 106 mins
+
+**Easy to read?:** Meh
+
+**Author:** Vladimir A. Knyaz et al
+
+**Year of Submission:** 2017
+
+### What problem does it solve?
+
+In dust, fog and low light conditions infrared images can be used to generate 3D geometry.
+
+### How does it solve it?
+
+Takes a stereo infrared scan, encodes parts of image using CAE, matches corresponding parts of both images and uses that information to generate a point cloud.
+
+1. **Local patch extraction:** Unstable on infrared imagery. Select small path 28x28 which is invariant to perspective transformations
+
+2. **CAE:** The patches are autoecoded
+
+#### Model
+
+| Layer       | Size out    | Kernel | Stride |
+| ----------- | ----------- | ------ | ------ |
+|Input        | 1 × 28 × 28 |        |        |
+|Convolution  | 8 × 13 × 13 | 4 × 4  | 2      |
+|Convolution  | 16 × 5 × 5  | 4 × 4  | 2      |
+|Inner Product| 16 x 1 x 1  |        |        |
+|Deconvolution| 8 × 5 × 5   | 5 × 5  | 2      |
+|Deconvolution| 1 × 28 × 28 | 8 × 8  | 5      |
+
+3. **Patch matching:** Prepare a codebook that establishes correspondences between the patch code and patch ID of a unique 3D point on a test object. 
+
+All patches are processed using CAE to get a code.
+
+Query the code book to find n nearest neighbours of the code.
+
+### How is this paper novel?
+
+1. DL based image patch matching method
+
+2. Usage of images with only untextured diffuse shading
+
+### Key takeaways
+
+1. Standard approaches rely on texture for matching keypoints. So if the object does not provide sufficient texture then the quality drops significantly.
+
+2. Image matching methods that use finite object planes such as plane sweep matching or PatchMatch seem to be robust on low textured areas.
+
+### What I still do not understand?
+
+1. Semi global block matching
+
+2. Patch matching, finite object planes.
+
+3. SFM
+
+4. Semi Global Matching
+
+5. How are patches converted to point cloud?
+
+### Ideas to pursue
+
+EMPTY
