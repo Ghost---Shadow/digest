@@ -1,3 +1,86 @@
+Hoshen, D. and Werman, M. Iq of neural networks. arXiv
+preprint arXiv:1710.01692, 2017.
+---------------------------------------------------------
 https://arxiv.org/abs/1505.07909
 
 http://dilab.gatech.edu/keith-mcgreggor/
+
+Carpenter, P. A., Just, M. A., and Shell, P. What one intelligence
+test measures: a theoretical account of the processing
+in the raven progressive matrices test. Psychological
+review, 97(3):404, 1990.
+
+Clark, P. and Etzioni, O. My computer is an honor studentbut
+how intelligent is it? standardized tests as a measure
+of ai. AI Magazine, 37(1):5–12, 2016.
+
+Davis, E. The limitations of standardized science tests as
+benchmarks for artificial intelligence research: Position
+paper. arXiv preprint arXiv:1411.1629, 2014.
+
+Fleuret, F., Li, T., Dubout, C., Wampler, E. K., Yantis, S.,
+and Geman, D. Comparing machines and humans on a
+visual categorization test. Proceedings of the National
+Academy of Sciences, 108(43):17621–17625, 2011.
+
+Flynn, J. R. Massive iq gains in 14 nations: What iq tests
+really measure. Psychological bulletin, 101(2):171, 1987.
+
+Garnelo, M., Arulkumaran, K., and Shanahan, M. Towards
+deep symbolic reinforcement learning. arXiv preprint
+arXiv:1609.05518, 2016.
+
+Higgins, I., Matthey, L., Pal, A., Burgess, C., Glorot, X.,
+Botvinick, M., Mohamed, S., and Lerchner, A. betavae:
+Learning basic visual concepts with a constrained
+variational framework. 2016.
+
+Higgins, I., Sonnerat, N., Matthey, L., Pal, A., Burgess,
+C. P., Botvinick, M., Hassabis, D., and Lerchner, A. Scan:
+learning abstract hierarchical compositional visual concepts.
+arXiv preprint arXiv:1707.03389, 2017.
+
+Santoro, A., Raposo, D., Barrett, D. G., Malinowski, M.,
+Pascanu, R., Battaglia, P., and Lillicrap, T. A simple neural
+network module for relational reasoning. In Advances
+in neural information processing systems, pp. 4974–4983,
+2017.
+
+Snow, R. E., Kyllonen, P. C., and Marshalek, B. The topography
+of ability and learning correlations. Advances in
+the psychology of human intelligence, 2(S 47):103, 1984.
+
+Wang, K. and Su, Z. Automatic generation of ravens progressive
+matrices. In Twenty-Fourth International Joint
+Conference on Artificial Intelligence, 2015.
+
+Zhang, C., Bengio, S., Hardt, M., Recht, B., and Vinyals, O.
+Understanding deep learning requires rethinking generalization.
+arXiv preprint arXiv:1611.03530, 2016.
+
+Johnson, J., Hariharan, B., van der Maaten, L., Fei-Fei, L.,
+Zitnick, C. L., and Girshick, R. Clevr: A diagnostic
+dataset for compositional language and elementary visual
+reasoning. In Computer Vision and Pattern Recognition
+(CVPR), 2017 IEEE Conference on, pp. 1988–1997.
+IEEE, 2017.
+
+Lovett, A. and Forbus, K. Modeling visual problem solving
+as analogical reasoning. Psychological review, 124(1):60,
+2017.
+
+----------------------------------------------------------
+
+Proceedings of the IEEE
+conference on computer vision and pattern recognition
+
+Computer Vision and Pattern Recognition
+(CVPR), 2017 IEEE Conference on, pp. 1988–1997.
+IEEE, 2017.
+
+In Advances
+in neural information processing systems, pp. 4974–4983,
+2017.
+
+In Twenty-Fourth International Joint
+Conference on Artificial Intelligence, 2015.
