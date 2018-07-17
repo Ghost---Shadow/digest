@@ -284,3 +284,49 @@ Tasks
 ### Ideas to pursue
 
 1. The definition of object looks weird. Multiple cells can have the same shape or one cell can have multiple shapes.
+
+## [Contextual RNN-GANs for Abstract Reasoning Diagram Generation](https://arxiv.org/abs/1609.09444v2)
+
+**Source Code:** [Not available](https://github.com/arnabgho/Contextual-RNN-GAN/issues/2)
+
+**Datasets:** DAT-DAR [Not available](https://github.com/arnabgho/Contextual-RNN-GAN/issues/1)
+
+**Time to read (minute):** 50
+
+**Easy to read?** Yes. Too much fluff text.
+
+**Author:** (IIT Kanpur) Arnab Ghosh, Viveka Kulharia, Amitabha Mukerjee, Vinay Namboodiri, Mohit Bansal
+
+**Year of Submission:** 2016
+
+### What problem does it solve?
+
+Visual Abstract Reasoning (Ravens matrix like)
+
+### How does it solve it?
+
+The generator is RNN based. The discriminator is also RNN based and is fed not only the generated/ground truth but also the input sequence. 
+
+The most similar image to the given options is taken as result. Image similarity is measured by calculating the cosine distance of the embedding vector of ground truth and prediction.
+
+#### Dataset
+
+#### Model
+
+![RnnGan](./imgs/RnnGan.png)
+
+### How is this paper novel?
+
+It uses a RNN-GAN to generate the solution.
+
+### Key takeaways
+
+1. L2 regularizations blur images and L1 decreases detail learning capacity.
+
+### What I still do not understand?
+
+1. How is undergraduate level human performance on the dataset only `44.17%`?
+
+### Ideas to pursue
+
+1. Increase the image size to `128x128` everybody is using this.
