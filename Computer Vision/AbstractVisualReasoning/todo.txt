@@ -5,6 +5,8 @@ https://arxiv.org/abs/1505.07909
 
 http://dilab.gatech.edu/keith-mcgreggor/
 
+Checkout Graph Neural Networks, Gated Graph Sequence Neural Networks and Interaction Networks.
+
 Carpenter, P. A., Just, M. A., and Shell, P. What one intelligence
 test measures: a theoretical account of the processing
 in the raven progressive matrices test. Psychological
@@ -69,6 +71,13 @@ Lovett, A. and Forbus, K. Modeling visual problem solving
 as analogical reasoning. Psychological review, 124(1):60,
 2017.
 
+Mikael Hena, Joan Bruna, and Yann LeCun. Deep convolutional networks on graph-structured data.
+arXiv:1506.05163, 2015.
+
+Kushal Ka
+e and Christopher Kanan. An analysis of visual question answering algorithms.
+arXiv:1703.09684, 2017.
+
 ----------------------------------------------------------
 
 Proceedings of the IEEE
@@ -84,3 +93,21 @@ in neural information processing systems, pp. 4974–4983,
 
 In Twenty-Fourth International Joint
 Conference on Artificial Intelligence, 2015.
+
+ICCV,
+
+NIPS,
+
+EMNLP,
+
+IROS,
+
+ICLR,
+
+TACL,
+
+IJARS,
+
+ECCV,
+
+AAAI,

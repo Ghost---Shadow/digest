@@ -152,3 +152,135 @@ Wang, K. and Su, Z. Automatic generation of ravens progressive matrices. In Twen
 2. Encode everything and compare pairwise.
 3. Make the NN explain what operations it took.
 4. For unsupervised learning, see if knowledge transfers accross problems.
+
+## [A simple neural network module for relational reasoning](https://arxiv.org/abs/1706.01427v1)
+
+**Source Code:** [Tensorflow](https://github.com/siddk/relation-network), [Pytorch](https://github.com/kimhc6028/relational-networks)
+
+**Datasets:** [CLEVR](https://cs.stanford.edu/people/jcjohns/clevr/),[bAbI](https://research.fb.com/downloads/babi/) and generated
+
+**Time to read:** 260
+
+**Easy to read?** Yes. Lengthy but no fluff. 
+
+**Author:** (DeepMind) Adam Santoro, David Raposo, David G.T. Barrett, Mateusz Malinowski, Razvan Pascanu, Peter Battaglia, Timothy Lillicrap
+
+**Year of Submission:** 2017
+
+### What problem does it solve?
+
+Visual question answering in the relational domain.
+
+e.g. *In the picture, what color is the square on the right hand side of the red circle?*
+
+### How does it solve it?
+
+```
+# Pass the raw pixels through a CNN to get image embedings
+image_embeddings = CNN()(input_image)
+
+# Slice the image embeddings in the from [i,j,:] to get objects
+x_y = image_embeddings.shape[0] * image_embeddings.shape[1] 
+z = image_embeddings.shape[2] 
+set_of_objects = image_embeddings.reshape((x_y, z))
+n = len(set_of_objects)
+
+# Encode the question to an embedding
+q = LSTM()(word_embedding(question_string))
+
+# Encode the relations
+f = DNN()
+g = DNN()
+encoded_relations = [[g(set_of_objects[i], set_of_objects[j], q) \
+                        for j in range(n)] \
+                        for i in range(n)]
+
+# [i, j, embeding_vector_dimension]
+output = f(reduce_sum(encoded_relations, axis=[0,1]))
+classification = softmax_crossentropy(output) # MCQ type testing
+```
+
+#### Dataset (CLEVR)
+
+The dataset contains a 3D rendered image, a question and an answer.
+
+Types of questions
+1. **Query** - What is the color of the sphere?
+2. **Compare** - Is the cube the same material oas the cylinder?
+
+Versions of CLEVR
+1. Pixel Version
+2. State description - 3D coord, color, shape, material, size
+
+95.5% accuracy (super human)
+
+#### Dataset (Sort of CLEVR)
+
+2D images with only relational questions. 6 objects per scene, square or triangle and 6 different colors. Questions are binary strings instead of natural language.
+
+96.4% accuracy
+
+#### Dataset (bAbI)
+
+Text based dataset with deduction, induction and counting. *Sandra picked up the football. Sandra went to the office. Where is the football? answer: Office.*
+
+Achieved a score of > 95% in 18/20 tasks
+
+Failed in two supporting facts and three supporting facts
+
+#### Dataset (Dynamic physical systems)
+
+Mass spring system. Each sceene has 10 colored balls on a tabletop surface. Balls can be free, or attached to another ball by a spring or rigid constraint.
+
+Input data is state descriptions of matrices. Each ball is a row in a matrix with RGB values and spatial coords accross 16 sequential time steps.
+
+Tasks
+1. Infer the existence of connections between balls.
+2. Count the number of systems on the table. 
+
+95% accuracy
+
+#### Model
+
+![RelationalNetwork](./imgs/RelationalNetwork.png)
+
+1. CNN was used to parse pixels to objects.
+2. After all the convolutional layers the slice `[i,j,k,:]` (`[N,H,W,C]`) is considered to be an object.
+3. Question words were assigned unique integers which were then used to index a learnable lookup table that provided embeddings to the LSTM.
+4. The object descriptor pairs and the question embedding is concatenated and fed into the `f` DNN.
+5. Summation is taken and the result vector is fed into the `g` DNN.
+6. Softmax cross entropy classification
+
+**State descriptors** - They were fed directly into the RN.
+
+**Natural Language**
+1. Take last 20 sentences.
+2. Tag with labels indicating relative position.
+3. Process each sentence into a vector using LSTM.
+
+### How is this paper novel?
+
+1. Usage of Relational Networks.
+2. Demonstration that relational networks can also operate on image embeddings.
+3. Achieved state of the art by 20%+
+
+### Key takeaways
+
+1. **RNs learn to infer relations** - They consider all potential relations. 
+> In graph theory parlance, the input can be thought of as a complete and directed graph whose nodes are objects and whose edges denote the object pairs whose relations should be considered.
+
+2. **RNs are data efficient** - `n^2` datapoints are available for training from an object set of length n due to the pairwise input of data. Since the same DNN is being used for all pairs, it is encouraged to not overfit. The size of the network does not need to scale with the number of interactions.
+
+3. **RNs operate on a set of objects** - The summation, in the equation, ensures order invariance. 
+
+4. Fails when objects are heavily occluded or a high precision object position representation is required. 
+
+### What I still do not understand?
+
+1. > So, after convolving the image, each of the d2 k-dimensional cells in the d x d feature maps was **tagged with an arbitrary coordinate** indicating its relative spatial position, and was treated as an object for the RN.
+2. > Question words were assigned unique integers, which were then used to index a **learnable lookup table** that provided embeddings to the LSTM.
+3. Dynamic physical system reasoning methodology in appendix
+
+### Ideas to pursue
+
+1. The definition of object looks weird. Multiple cells can have the same shape or one cell can have multiple shapes.
