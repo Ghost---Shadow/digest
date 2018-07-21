@@ -1,0 +1,4 @@
+Samuel R Bowman, Luke Vilnis, Oriol Vinyals, Andrew
+M Dai, Rafal Jozefowicz, and Samy Bengio.
+2015. Generating sentences from a continuous
+space. arXiv preprint arXiv:1511.06349 .
