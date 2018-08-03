@@ -148,8 +148,6 @@ Other approaches predict only a coarse resolution voxel grid. They directly mini
 
 **Time to read:** 106 mins
 
-**Easy to read?:** Meh
-
 **Author:** Vladimir A. Knyaz et al
 
 **Year of Submission:** 2017

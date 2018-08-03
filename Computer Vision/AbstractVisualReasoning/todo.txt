@@ -5,6 +5,12 @@ https://arxiv.org/abs/1505.07909
 
 http://dilab.gatech.edu/keith-mcgreggor/
 
+Read about attention.
+
+FILM
+
+MACNET
+
 Checkout Graph Neural Networks, Gated Graph Sequence Neural Networks and Interaction Networks.
 
 Carpenter, P. A., Just, M. A., and Shell, P. What one intelligence
@@ -80,6 +86,44 @@ arXiv:1703.09684, 2017.
 
 ----------------------------------------------------------
 
+Textual stuff
+
+Yossi Adi, Einat Kermany, Yonatan Belinkov, Ofer 
+Lavi, and Yoav Goldberg. 2016. Fine-grained analysis
+of sentence embeddings using auxiliary prediction
+tasks. arXiv preprint arXiv:1608.04207
+
+Samuel R Bowman, Luke Vilnis, Oriol Vinyals, Andrew
+M Dai, Rafal Jozefowicz, and Samy Bengio.
+2015. Generating sentences from a continuous
+space. arXiv preprint arXiv:1511.06349 .
+
+Jiwei Li, Michel Galley, Chris Brockett, Jianfeng Gao,
+and Bill Dolan. 2016a. A persona-based neural conversation
+model. arXiv preprint arXiv:1603.06155
+
+Chia-Wei Liu, Ryan Lowe, Iulian V Serban, Michael
+Noseworthy, Laurent Charlin, and Joelle Pineau.
+2016. How not to evaluate your dialogue system:
+An empirical study of unsupervised evaluation metrics
+for dialogue response generation. arXiv preprint
+arXiv:1603.08023 .
+
+Iulian V Serban, Alessandro Sordoni, Yoshua Bengio,
+Aaron Courville, and Joelle Pineau. 2016a. Building
+end-to-end dialogue systems using generative hierarchical
+neural network models. In Proceedings of
+the 30th AAAI Conference on Artificial Intelligence
+(AAAI-16).
+
+Iulian Vlad Serban, Alessandro Sordoni, Ryan Lowe,
+Laurent Charlin, Joelle Pineau, Aaron Courville,
+and Yoshua Bengio. 2016b. A hierarchical latent
+variable encoder-decoder model for generating dialogues.
+arXiv preprint arXiv:1605.06069 .
+
+----------------------------------------------------------
+
 Proceedings of the IEEE
 conference on computer vision and pattern recognition
 
@@ -111,3 +155,19 @@ IJARS,
 ECCV,
 
 AAAI,
+
+Annual 
+Meeting of the Special Interest Group on Discourse
+and Dialogue
+
+Advances in neural information processing
+systems.
+
+Proceedings of
+the 30th AAAI Conference on Artificial Intelligence
+
+Journal of Machine
+Learning Research
+
+Modern Machine Learning and Natural
+Language Processing Workshop.

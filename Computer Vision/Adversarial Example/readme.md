@@ -4,8 +4,6 @@
 
 **Time to read:** 105 mins
 
-**Easy to read:** Yes
-
 **Author:** Christian Szegedy et al
 
 **Year of Submission:** 2014

@@ -8,8 +8,6 @@
 
 **Time to read:** 100 mins
 
-**Easy to read?:** Yes
-
 **Author:** Dokhyam Hoshen and Michael Werman
 
 **Year of Submission:** 2017
@@ -33,7 +31,7 @@ RGB images
 
 ### How is this paper novel?
 
-Nobody else is interested in this field of research
+TODO
 
 ### Key takeaways
 
@@ -55,8 +53,6 @@ Nobody else is interested in this field of research
 **Datasets:** [Generated](https://deepmind.com/blog/measuring-abstract-reasoning/) 
 
 **Time to read:** 325
-
-**Easy to read?:** Yes. Too lengthy. Relnet explanation insufficient.
 
 **Author:** (DeepMind) David G.T. Barrett, Felix Hill, Adam Santoro, Ari S. Morcos, Timothy Lillicrap
 
@@ -160,8 +156,6 @@ Wang, K. and Su, Z. Automatic generation of ravens progressive matrices. In Twen
 **Datasets:** [CLEVR](https://cs.stanford.edu/people/jcjohns/clevr/),[bAbI](https://research.fb.com/downloads/babi/) and generated
 
 **Time to read:** 260
-
-**Easy to read?** Yes. Lengthy but no fluff. 
 
 **Author:** (DeepMind) Adam Santoro, David Raposo, David G.T. Barrett, Mateusz Malinowski, Razvan Pascanu, Peter Battaglia, Timothy Lillicrap
 
@@ -293,8 +287,6 @@ Tasks
 
 **Time to read (minute):** 50
 
-**Easy to read?** Yes. Too much fluff text.
-
 **Author:** (IIT Kanpur) Arnab Ghosh, Viveka Kulharia, Amitabha Mukerjee, Vinay Namboodiri, Mohit Bansal
 
 **Year of Submission:** 2016
@@ -325,8 +317,8 @@ It uses a RNN-GAN to generate the solution.
 
 ### What I still do not understand?
 
-1. How is undergraduate level human performance on the dataset only `44.17%`?
+EMPTY
 
 ### Ideas to pursue
 
-1. Increase the image size to `128x128` everybody is using this.
+1. Increase the image size to `128x128` in my paper.

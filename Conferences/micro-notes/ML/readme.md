@@ -1,4 +1,4 @@
-# Micro takeaways
+# Machine Learning
 
 ## [Mukund Narasimhan, Engineer, Pinterest at MLconf Seattle 2017](https://www.youtube.com/watch?v=nl8a3DR2cXk)
 
