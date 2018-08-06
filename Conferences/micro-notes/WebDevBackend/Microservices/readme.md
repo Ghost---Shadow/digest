@@ -87,3 +87,9 @@ do this
 1. Two generals problem: All acknowledgements need an acknowledgement. (unsolveable)
 2. two phase commit: Reduce the window of failure by not committing to the commit in one go.
 3. Event sourcing: Dont store state, store events. Events are deltas.
+
+## [When Microservices Meet Event Sourcing](https://www.youtube.com/watch?v=cISNDnwlSgw)
+
+1. Events are immutable and immortal.
+2. Event store is not good for queries
+3. Not good for read heavy apps.
