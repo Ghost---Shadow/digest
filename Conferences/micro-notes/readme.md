@@ -9,3 +9,8 @@
 5. DRY: Kitchens and bathrooms both need plumbing but both dont need toilets
 6. Life and software is path dependent
 7. Tradeoff perfectionism and shipping
+
+## [Rob Pike - 'Concurrency Is Not Parallelism'](https://www.youtube.com/watch?v=cN_DpYBzKso)
+
+1. Once you achieve concurrency, parallism is just adding more workers.
+2. Dijkstra guarded commands ~ pseudocode
