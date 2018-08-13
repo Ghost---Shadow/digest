@@ -73,3 +73,45 @@ Architecture
 
 1. Replace all alphabets with `X` and numbers with `0` and all other characters with `.`.
 2. Find a ready to use, UBL JSON schema.
+
+## [A Part based Modeling Approach for Invoice Parsing](http://www.scitepress.org/Papers/2016/57778/57778.pdf)
+
+**Source Code:** ???
+
+**Datasets:** ???
+
+**Time to read (mins):** 30
+
+**Author:** (Gebze Technical University, Turkey) Enes Aslan, Tugrul Karakaya, Ethem Unver and Yusuf Sinan Akgul
+
+**Year of Submission:** 2016
+
+### What problem does it solve?
+
+Many invoice parsers have a classifier which tries to classify the type of invoice before a structure gnostic parser, parses the document. In this paper, the authors detect individual invoice parts.
+
+Classes in focus: Table, Invoice Text, Serial No Label, Order No Label, Finance Office Logo, Comnany Logo, Date Label, Receiver Tax Office, Receiver, Sender, Overall.
+
+### How does it solve it?
+
+It uses a candidate window generation detector to find parts of the invoice.
+
+Steps
+1. Generate candidate windows and assign scores
+2. The second phase uses the candidate positions and scores to decide the final positions of each invoice part using PBM optimization.
+3. Use HOG to find logos
+4. Genetic optimization to fine tune the candidate areas.
+
+#### Model
+
+![architecture](./imgs/pbm_architecture.png)
+
+### Key takeaways
+
+1. The logo of the corporation is useful in localizing other features in the invoice.
+
+### What I still do not understand?
+
+1. Part Based Modeling
+
+### Ideas to pursue
