@@ -1,3 +1,14 @@
+http://www.cs.cornell.edu/~asaxena/learningdepth/saxena_ijcv07_learningdepth.pdf
+http://www.hao-li.com/publications/papers/eg2017LDTBGF.pdf
+https://arxiv.org/pdf/1612.00523v1.pdf
+http://graphics.stanford.edu/projects/bundlefusion/
+https://homes.cs.washington.edu/~izadinia/im2cad.html
+http://aaronsplace.co.uk/papers/jackson2017recon/
+http://3dmatch.cs.princeton.edu/
+https://github.com/YadiraF/PRNet
+https://www.cl.cam.ac.uk/research/rainbow/projects/shape2vec/
+http://3dgan.csail.mit.edu/
+—————————————————————————————
 Photogrammetry 
 https://colmap.github.io/
 
