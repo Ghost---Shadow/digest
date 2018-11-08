@@ -41,3 +41,41 @@ Equivalent to purchasing a perpetuity and then selling it at `t+1`. **Indexing s
 
 Effective Annual Rate
 EAR = (1+r/n)^n - 1
+
+## 4. Present Value Relations 3
+
+Mark to market - Establish a market price of an asset by querrying the market.
+
+Increase in cost of living, I is inflation
+```
+= I[t + k]/I[t] 
+= (1 + p) ^ k
+```
+
+Real wealth after k years 
+`= W[t + k] / (1 + p) ^ k`
+
+Real return
+```
+= W[t + k]/(W[t] * (1 + p) ^ k)
+= (1 + r_nominal) / (1 + p) - 1
+= r_nominal - p
+r_real = r_nominal - p
+```
+
+Equity = Assets - Liabilities
+
+Asset = Something you have
+Liabilities = Something you owe
+
+Futures = Financial contracts obligating the buyer to purchase an asset or the seller to sell an asset, such as a physical commodity or a financial instrument, at a predetermined future date and price.
+
+Liquidity decreases with complexity of figuring out the market value of an asset.
+
+Loan = money to borrow
+Margin = A collateral the borrower has to give to the lender (broker)
+Leverage = Purchasing more stocks than what the portfolio holder has, where the borrowable amount is scaled by the amount of money the holder has.
+
+Derivative = Any asset whose value depends on the underlying set of assets is called a derivative
+
+Coupon bonds = A bond which gives the bearer `x%` of its value every year (similar to dividend).
