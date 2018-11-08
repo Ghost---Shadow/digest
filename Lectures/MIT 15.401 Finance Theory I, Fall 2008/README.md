@@ -79,3 +79,34 @@ Leverage = Purchasing more stocks than what the portfolio holder has, where the 
 Derivative = Any asset whose value depends on the underlying set of assets is called a derivative
 
 Coupon bonds = A bond which gives the bearer `x%` of its value every year (similar to dividend).
+
+## 5. Fixed income securities 2
+
+Investment grade assets = ?
+
+`R[t]` = rate of interest at year `t` (Spot rate)
+
+```
+P = F / ((1 + R[1]) (1 + R[2]) ... (1 + R[T]))
+
+let r = geometric_mean(1 + R) - 1
+P = F / (1 + r) ^ T
+
+P[t - 1] / P[t] = 1 + R[t]
+R[t] is called forward rate
+```
+
+Coupon bonds
+
+```
+P = F/(1+R[1]) +  F/((1+R[1])(1+R[2])) +  F/((1 + R[1]) (1 + R[2]) ... (1 + R[T])))
+
+y = r
+
+r needs to be determined numerically
+```
+
+Expectation hypothesis: Expected Future Spot
+```
+E[0](R [k]) = f[k]
+```
