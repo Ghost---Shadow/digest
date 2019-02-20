@@ -110,3 +110,12 @@ Expectation hypothesis: Expected Future Spot
 ```
 E[0](R [k]) = f[k]
 ```
+## 6. Fixed income securities 3
+
+Yield curve = graph of interest rate vs maturity date (borrowing period)
+
+Arbitrage = free lunch
+
+Macaulay duration = Duration the investor is exposed to risk
+
+Second order derivative of yield curve is volatility
