@@ -119,3 +119,29 @@ Arbitrage = free lunch
 Macaulay duration = Duration the investor is exposed to risk
 
 Second order derivative of yield curve is volatility
+
+## 7. Fixed income securities 4
+
+**Securitization** - Polarising the risks of multiple *uncorrelated* bonds so that we can entice investors with both high risk and low risk appetite. 
+
+Let there be two bonds, 1000 each, with 10% default risk.
+
+The success matrix
+
+| Event | Chance | Payout |
+|-------|---------|-----------|
+| Both succeed | 81% | 2000 |
+| One succeeds | 18% | 1000 |
+| Both fails   | 1% | 0 |
+
+We as bond issuers issue both bonds but we have a special policy. For a premium, the investor can buy a hypothetical bond. Such that if one of the bonds, succeed, then he gets a payout. Or, he can buy another policy where he gets paid only if both bonds succeed. What should be the price of these two hypothetical bonds?
+
+Senior Tranche = Probability of payout * payout = 99% * 1000 = 990
+Junior Tranche = 81% * 1000 = 810
+
+For perfectly correlated bonds
+
+| Event | Chance | Payout |
+|-------|---------|-----------|
+| Both succeed | 81% | 2000 |
+| Both fails   | 19% | 0 |
