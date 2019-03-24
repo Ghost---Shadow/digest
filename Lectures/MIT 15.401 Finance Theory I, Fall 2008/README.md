@@ -145,3 +145,39 @@ For perfectly correlated bonds
 |-------|---------|-----------|
 | Both succeed | 81% | 2000 |
 | Both fails   | 19% | 0 |
+
+## 8. Equities
+
+Equity = Part ownership in a corporation
+
+Limited Liability = The most you can loose is the money you put in.
+
+Short sale = ?
+
+Primary market = Venture capital, IPO
+
+Secondary market = Stock exchanges
+
+```
+P[t] = Price of stock at t
+D[t] = Cash dividend at t
+E[t]() = Expectation operator (forecast) at t
+r[t] = Risk adjusted discount rate for cashflow at t
+
+P[t] = V[t](D[t + 1], D[t + 2], ...)
+= E[t](D[t + 1]) / (1 + r[t + 1]) + E[t](D[t + 2]) / (1 + r[t + 2])^2 + ...
+
+P[t] = sum(E[t](D[t + k]) / (1 + r[t + k]) ^ k, k = 1 to inf)
+```
+
+Assuming
+
+```
+D[t] = D
+r[t] = r
+
+P[inf] = P = D/r
+
+with growth
+P = D/(r - g)
+```
