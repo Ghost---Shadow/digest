@@ -152,7 +152,7 @@ Equity = Part ownership in a corporation
 
 Limited Liability = The most you can loose is the money you put in.
 
-Short sale = ?
+Short sale = Selling your asset before you default
 
 Primary market = Venture capital, IPO
 
