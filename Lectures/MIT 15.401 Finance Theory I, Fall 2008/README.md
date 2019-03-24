@@ -181,3 +181,15 @@ P[inf] = P = D/r
 with growth
 P = D/(r - g)
 ```
+
+## 9. Forward and Futures Contracts 1
+
+**Forward/Futures contract** = A legal binding contract that a transaction will take place at some time in future.
+
+Forwards contract only works when both buyer and seller think neither are losing value. Therefore the contract itself has no value.
+
+Forwards are used to eliminate uncertainity. Lock in a price.
+
+Forwards are useful when you want to buy something now but dont want to store it physically right now.
+
+Futures = Every sub period of market fluctuations the parties pay the deviation from the market price and the agreed value. In this way they mitigate counterparty risk.
