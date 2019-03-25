@@ -193,3 +193,22 @@ Forwards are used to eliminate uncertainity. Lock in a price.
 Forwards are useful when you want to buy something now but dont want to store it physically right now.
 
 Futures = Every sub period of market fluctuations the parties pay the deviation from the market price and the agreed value. In this way they mitigate counterparty risk.
+
+## 10. Forward and Futures Contracts 2 and Options 1
+
+Futures/Forwards price at time t = Buying the same amount at t=0 and then paying for storage for time t
+
+```
+F[t,T] / (1 + t) ^ (T - t) = P[t] + S[t]
+```
+
+Since stocks are very correlated, you can short sell the SNP500 and achieve the same effect as selling your portfolio.
+
+Options = Futures but you can cancel the deal at any time
+
+Put = Selling Options
+Call = Buying Options
+
+Put options are insurances
+
+Early excercise - Early selling
