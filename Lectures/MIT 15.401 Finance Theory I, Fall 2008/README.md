@@ -209,6 +209,57 @@ Options = Futures but you can cancel the deal at any time
 Put = Selling Options
 Call = Buying Options
 
-Put options are insurances
+Put options are insurances but unlike insurances you can cash in any time. Also, they can be bought and sold on the exchange.
 
-Early excercise - Early selling
+Early excercise = Early selling
+
+## 11. Options 2
+
+### Call option
+
+Payoff diagram: Payoff vs stock price
+
+Payoff diagram at maturity date. Dotted line is premium for the option.
+![Payoff diagram](./payoff_diagram_call.png)
+
+If the value of stock price `< 20$` at maturity then the payoff is zero.
+
+The value of a option before maturity is non zero even if the stock price `< 20$` due to its potential.
+
+### Put option
+
+Sell the stock before
+
+![Payoff diagram](./payoff_diagram_put.png)
+
+Max payoff is bounded `10$`
+
+Insurances are put options
+
+### Option Strategies
+
+#### Call + Put
+
+![Payoff diagram](./payoff_diagram_call_and_put.png)
+
+#### Call - Call
+
+![Payoff diagram](./payoff_diagram_call_and_call.png)
+
+Options price and volatility are related
+
+### Corporate liabilities
+
+V = ?
+B = ?
+
+Equity = V - B + Max (0, B - V)
+Debt = B - Max(0, B - V)
+
+V = Debt + Equity
+
+### Other
+
+Labor markets with fixed tenure look like options: After the fixed amount of money for the tenure, there are no more liabilities. 
+
+Education is an option: After the payment of the education fees, there are no more liabilities.
