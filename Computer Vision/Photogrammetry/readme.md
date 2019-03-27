@@ -208,3 +208,62 @@ Query the code book to find n nearest neighbours of the code.
 ### Ideas to pursue
 
 EMPTY
+
+## [Neural scene representation and rendering](https://deepmind.com/blog/neural-scene-representation-and-rendering/)
+
+**Source Code:** [???]()
+
+**Datasets:** [Github](https://github.com/deepmind/gqn-datasets)
+
+**Author:** (DeepMind) S. M. Ali Eslami, Danilo J. Rezende et al
+
+**Year of Submission:** 2018
+
+**Time to read:** 60+
+
+### What problem does it solve?
+
+Converting images to descriptions. Generative Query Network.
+
+> The GQN takes as input images of a scene taken from different viewpoints, constructs an internal representation, and uses this representation to predict the appearance of that scene from previously unobserved viewpoints
+
+### How does it solve it?
+
+#### Model
+
+![model](./imgs/neural_rendering.png)
+
+#### Scene prediction
+1. The agent collects K images x[k] from viewpoints v[k].
+2. Passes these observations to a representation network f and a generation network g.
+3. The generator network then predicts the scene from an arbitary query v[q].
+
+#### Robotic arm control
+1. Train GQN to represent the observations.
+2. Train a refinforcement learning policy directly on these representations.
+
+#### Maze environments
+1. Objective is to predict a maze, which is shown top down, from multiple perspectives.
+2. > After about only five observations, the GQN’s uncertainty disappears almost entirely.
+
+### How is this paper novel?
+
+1. Structure from depth and point cloud based techniques pre-define the primitives. GQN on the other hand lets the network define its own representation for the scenes.
+2. AEs and density models only capture the distribution of the images, it doesnt encourage learning how different views of the same 3D scene relate to one another.
+
+### Key takeaways
+
+1. Models which generate literal representations like voxels or point clouds scale poorly with scene complexity and size and are difficult to apply to non-rigid objects. 
+2. Fewer than 5 viewpoints per scene were supplied to the network.
+3. VAE fails to capture contents.
+4. Capable of latent space algebra.
+5. Not tested on real world data.
+
+### What I still do not understand?
+
+1. Bayesian surprise
+2. Viewpoint transformation networks
+
+### Ideas to pursue
+
+1. > the GQN can be augmented with a second 'generator' that, given an image of a scene, predicts the viewpoint from which it was taken, providing a new source of gradients with which to train the representation network.

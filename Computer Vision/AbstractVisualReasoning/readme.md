@@ -322,3 +322,76 @@ EMPTY
 ### Ideas to pursue
 
 1. Increase the image size to `128x128` in my paper.
+
+## [Automatic Generation of Raven’s Progressive Matrices](https://www.ijcai.org/Proceedings/15/Papers/132.pdf)
+
+**Source Code:** ???
+
+**Datasets:** ???
+
+**Author:** (University of California) Ke Wang, Zhendong Su
+
+**Year of Submission:** 2015
+
+**Time to read (minute):** 90 7:30 9:00
+
+### What problem does it solve?
+
+> Our goal is to efficiently generate a large number of RPMs that are authentic (i.e. similar to manually written problems), interesting (i.e. diverse in terms of difficulty), and well-formed (i.e. unambiguous).
+
+> How to formalize RPMs to accommodate their seemingly enormous diversity, and how to define and enforce their validity? To this end, we (1) introduce an abstract representation of RPMs using first-order logic, and (2) restrict instantiations to only valid RPMs
+
+> ...24 participants, that the generated problems are statistically indistinguishable from actual problems.
+
+### How does it solve it?
+
+Three kinds of relations
+
+![Three types of relations](./imgs/ThreeTypesOfRelations.png)
+
+1. Unary Relation - The element in the first cell determines the element in the second cell via unary function f, which in turn determines the third by unary function g.
+
+2. Binary Relation - Any two elements and a binary function can be used to generate the third element. (limited to and, or, xor)
+
+3. Ternary Relation - The function of all three elements is a constant. **The constant is same for all rows.**
+
+Three conditions must be satisfied
+1. There must be a solution
+2. It must have an unique solution.
+3. The user must identify all three constraints to identify the solution. If the user identifies `< 3` constraints, then the user should see multiple possible solutions. Thus all three constraints are necessary.
+
+### Key takeaways
+
+1. Three types of progressive matrices: Colored PM (easy), Standard PM (medium), advanced PM (hard)
+
+### What I still do not understand?
+
+1. Formulas 1, 2 and 3
+2. > Arithmetic progression: Given the selected attribute a,
+construct a random sequence of numbers from a’s domain
+to form an arithmetic progression...
+
+### Ideas to pursue
+
+1. 
+
+Gradients for unary, o3 = f(g(o1)), o2 = g(o1)
+Gradients for binary, o3 = f(o1,o2)
+Gradients for ternary, 
+
+o1 + o2 + o3 = o1' + o2' + o3'
+o3' = o1 + o2 + o3 - o1' - o2'
+E(o3') = D(o1 + o2 + o3 - o1' - o2')
+
+repeat for o1' and o2'
+
+2. Pass the index with each embedding
+3. Just classify which operations were done
+4. 
+
+### Temp
+
+Each object is `o`. Each object has an attribute `\alpha`. `\tau(o,\alpha)`. `\rho(o,i,j)` denotes the position of `o` is in `(i,j)`.
+
+`v(o,i)` specifies that `o` appears in the `ith` choice of the answer set.
+
