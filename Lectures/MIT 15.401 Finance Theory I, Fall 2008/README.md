@@ -220,7 +220,7 @@ Early excercise = Early selling
 Payoff diagram: Payoff vs stock price
 
 Payoff diagram at maturity date. Dotted line is premium for the option.
-![Payoff diagram](./payoff_diagram_call.png)
+![Payoff diagram](./11_payoff_diagram_call.png)
 
 If the value of stock price `< 20$` at maturity then the payoff is zero.
 
@@ -230,7 +230,7 @@ The value of a option before maturity is non zero even if the stock price `< 20$
 
 Sell the stock before
 
-![Payoff diagram](./payoff_diagram_put.png)
+![Payoff diagram](./11_payoff_diagram_put.png)
 
 Max payoff is bounded `10$`
 
@@ -240,11 +240,11 @@ Insurances are put options
 
 #### Call + Put
 
-![Payoff diagram](./payoff_diagram_call_and_put.png)
+![Payoff diagram](./11_payoff_diagram_call_and_put.png)
 
 #### Call - Call
 
-![Payoff diagram](./payoff_diagram_call_and_call.png)
+![Payoff diagram](./11_payoff_diagram_call_and_call.png)
 
 Options price and volatility are related
 
@@ -254,6 +254,7 @@ V = ?
 B = ?
 
 Equity = V - B + Max (0, B - V)
+
 Debt = B - Max(0, B - V)
 
 V = Debt + Equity
@@ -263,3 +264,56 @@ V = Debt + Equity
 Labor markets with fixed tenure look like options: After the fixed amount of money for the tenure, there are no more liabilities. 
 
 Education is an option: After the payment of the education fees, there are no more liabilities.
+
+## 12. Options 3 and Risk and Return 1
+
+`S[0]` = Stock price right now
+
+K = Strike price
+
+Option expires tomorrow 
+`C[1] = max(s[1] - K, 0)`
+
+Suppose `S[0] -> S[1]` is Bernoulli trial
+
+![Valuation of options](./12_valuation_of_options_1.png)
+
+B = Bonds
+r = Growth rate (e.g. 1.03)
+
+`V[0] == S[0]\delta + B`
+
+```
+V[1]
+= uS[0]\delta + rB = C[u] (with probability p)
+or
+= dS[0]\delta + rB = C[d] (1 - p)
+```
+
+![Valuation of options](./12_valuation_of_options_2.png)
+
+Notice: There is no p in the formula
+
+Buyer and seller have two different p but can agree on the price of the option.
+
+```
+d < r < u
+```
+
+If r < d then nobody would ever buy B because the rate of riskless borrowing is less than the lowest payout of riskful borrowing.
+
+If r > u then the risk free borrowing is better than the riskful borrowing.
+
+![Valuation of options](./12_valuation_of_options_3.png)
+
+### Risk and Return
+
+```
+Return = R[i][t] = (D[i][t] + P[i][t] - P[i][t-1]) /  P[i][t-1]
+
+Expected Return = E(R[i][t])
+
+Excess Return = R[i][t] - r[f]
+
+Risk Premium = E(R[i][t]) - r[f]
+```
