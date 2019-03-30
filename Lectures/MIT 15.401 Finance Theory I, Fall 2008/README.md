@@ -317,3 +317,32 @@ Excess Return = R[i][t] - r[f]
 
 Risk Premium = E(R[i][t]) - r[f]
 ```
+
+## 13. Risk and Return 2 & Portfolio Theory 1
+
+Sine wave is not a good model for a market. Because as soon as people take advantage of a pattern. It changes.
+
+Efficient market is random. If it is not random, it means there are not enough people trying to find the patterns.
+
+> Stocks are random walks with drift
+
+*Read about the january effect*
+
+*Read about the P/B to returns*
+
+### Portfolio
+
+```
+w = { w1, w2, ..., wn }
+
+w[i] = N[i]P[i] / sum(N[i]P[i])
+
+1 = w1 + w2 + ... + w3
+
+w[i] belongs to R
+
+if w[i] < than 1 then short selling
+if w[i] > 1 then leverage
+```
+
+Good portfolio = High mean low std
