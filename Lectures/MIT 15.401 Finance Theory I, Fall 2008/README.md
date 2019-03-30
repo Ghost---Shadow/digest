@@ -346,3 +346,48 @@ if w[i] > 1 then leverage
 ```
 
 Good portfolio = High mean low std
+
+## 14. Portfolio Theory 2
+
+```
+Mean = E(Ri) = u[i]
+Variance = Var(R[i]) = s ^ 2
+
+R[p] = sum(w[i]R[i])
+E(R[p]) = sum(w[i]u[i]) 
+
+Var(R[p]) 
+= E((R[p] - u[p]) ^ 2)
+
+E(w[i][j](R[i] - u[i])(R[j] - u[j])) 
+= w[i]w[j] Cov(R[i],R[j])
+= w[i][j]s[i]s[j]p[i,j]
+```
+
+**Vector notation**
+
+```
+w = Weight vector
+R = Portfolio matrix [stock_index, historical_prices]
+u = Mean value of each stock in portfolio
+E(R) = w . u
+Var(R) = reduce_sum(hadamard_product((w * wT), Cov(R)))
+```
+
+There are n variances and `n^2 - n` covariances
+
+Individual variances dont matter as much as covariances.
+
+### Risk return curve
+
+![return by risk curve](./14_return_by_risk_curve.png)
+
+### Risk return curve - Effects of correlation between stocks
+
+![effects of correlation](./14_effects_of_correlation.png)
+
+### Risk return curve - Treasury bills vs stocks
+
+![effects of correlation](./14_t_bills_vs_stocks.png)
+
+Efficient frontier = It makes no sense to get more risk for the same return.
