@@ -391,3 +391,52 @@ Individual variances dont matter as much as covariances.
 ![effects of correlation](./14_t_bills_vs_stocks.png)
 
 Efficient frontier = It makes no sense to get more risk for the same return.
+
+## 15. Portfolio Theory 3 & The CAPM and APT 1
+
+### Tangency portfolio
+
+There is only one portfolio that can be mixed with T bills that lies on the efficient frontier and that point is the tangent line from T bills to the efficient frontier.
+
+![Tangency portfolio](./15_tangency_portfolio.png)
+
+* If you choose a slope lesser the tangent point then there exists another point which gives greater return for the same risk.
+* Does this assume that our objective function is = 1 * returns + (-1) * risk
+* Indifference curve will be a curve passing through the tangency point.
+
+### Sharpe ratio
+
+```
+Sharpe ratio = (E(R[p]) - r[f]) / s[p]
+```
+
+* Higher is better.
+* Tangency portfolio has the highest sharpe ratio of any portfolio.
+* Alpha = risk adjusted performance
+* `r[f]` is subtracted from `E(R[p])` because that is the lowest amount of returns you can expect from any investment?
+
+### Capital Asset Pricing Model
+
+Efficient portfolios
+
+```
+f = ?
+m = market
+p = portfolio
+s = std dev = risk
+
+E(R[p]) = R[f] + (s[p] / s[m]) (E(R[m]) - R[f])
+```
+
+Market beta for an asset
+```
+B[i] = Cov(R[i], R[m]) / Var(R[m])
+```
+
+Sharpe-Lintner CAPM
+
+```
+E(R[i]) = R[f] + B[i] (E(R[m]) - R[f])
+```
+* Risk-reward relation is liner
+* Beta is the correct measure of risk instead of sigma
