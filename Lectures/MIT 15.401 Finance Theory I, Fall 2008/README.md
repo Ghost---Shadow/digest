@@ -326,9 +326,9 @@ Efficient market is random. If it is not random, it means there are not enough p
 
 > Stocks are random walks with drift
 
-*Read about the january effect*
+*TODO: Read about the january effect*
 
-*Read about the P/B to returns*
+*TODO: Read about the P/B to returns*
 
 ### Portfolio
 
@@ -420,7 +420,7 @@ Sharpe ratio = (E(R[p]) - r[f]) / s[p]
 Efficient portfolios
 
 ```
-f = ?
+f = risk free investments
 m = market
 p = portfolio
 s = std dev = risk
@@ -438,5 +438,21 @@ Sharpe-Lintner CAPM
 ```
 E(R[i]) = R[f] + B[i] (E(R[m]) - R[f])
 ```
-* Risk-reward relation is liner
+* Risk-reward relation is linear
 * Beta is the correct measure of risk instead of sigma
+
+## 16. The CAPM and APT 2
+
+```
+B[p] = w . B
+```
+
+Beta is linear
+
+B is a measure of riskiness
+
+> Sigma is the right measure of risk only for efficient portfolios. For all other portfolios, Beta is the right measure of risk.
+
+*TODO: Read about exotic Betas*
+
+![implementing capm](./16_implementing_capm.png)
