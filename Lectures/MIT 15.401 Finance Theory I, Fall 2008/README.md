@@ -456,3 +456,30 @@ B is a measure of riskiness
 *TODO: Read about exotic Betas*
 
 ![implementing capm](./16_implementing_capm.png)
+
+## 17. The CAPM and APT III & Capital Budgeting I
+
+```
+CF = inflows - outflows
+= operating revenues
+- operating expenses without depreciation
+- Capital expenditures
+- income tax
+
+operating profit = operating income - operating expenditure
+
+project income taxes = tax rate * operating profit
+- tax * depreciation
+
+CF = (1 - tax) * operating profit 
+- capital expenditures
+- tax * depreciation
+```
+
+You dont get income tax returns on your entire capital investment in the same year you purchased it. It is given back using depreciation.
+
+Accounting earnings =/= after tax net cash flow
+
+Hedge fund are very risky. Their future returns are greatly undervalued
+
+Beta is the systematic risk. Beta correlates with returns.
