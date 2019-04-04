@@ -483,3 +483,44 @@ Accounting earnings =/= after tax net cash flow
 Hedge fund are very risky. Their future returns are greatly undervalued
 
 Beta is the systematic risk. Beta correlates with returns.
+
+## 18. Capital Budgeting 2 and Efficient Markets 1
+
+### Payback period: How much time until I get return of investment
+- ignores time value of money
+- ignores cashflows after k
+
+```
+sum((CF[i] / (1+R[i])), 1, k) >= -CF[0] = I[0]
+```
+
+### Profitability index: Gross rate of return
+- ignores scale (2$:1$ =/= 2mil$:1mil$)
+
+```
+PI = PV / (-CF[0])
+```
+
+### Internal rate of return
+- only one deposit
+- no negative cash flows
+- only one project under consideration
+- Rate = opportunity cost of capital
+- IRR may not exist
+- There may be multiple IRR (roots might be complex)
+- ignores scale
+
+```
+I[0] = sum(CF[i] / (1 + IRR) ^ i)
+
+Solve for IRR
+```
+
+Take project with greatest IRR
+
+### Efficient markets says
+- No free lunch
+- Prices reflect all available info
+- Prices follow random walks
+- Tradeoff between risk and expected return
+- Active management does not add value
