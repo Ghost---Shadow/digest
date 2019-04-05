@@ -524,3 +524,46 @@ Take project with greatest IRR
 - Prices follow random walks
 - Tradeoff between risk and expected return
 - Active management does not add value
+
+## 19. Efficient Markets 2
+
+uncertainity =/= risk
+
+uncertainity = unquantifiable risk
+
+### Dutch book theorem
+
+Event A = S&P 500 falls 5% or more next monday
+
+Believes
+
+Prob(A) = 1/2
+Prob(!A) = 3/4
+
+This implies that you will take bets
+
+B1 = 1$ if A and -1$ if !A
+B2 = 1$ if !A and -3$ if A
+
+#### I place 50$ on B1 and 75$ on B2
+
+If A occurs: I lose 50$ on B1 and win 75$ on B2
+If !A occurs: I lose 25$ on B2 and win 50$ on B1
+
+### Behavioral vs rational
+
+Frontal lobe damage
+- No impact on IQ or memory
+- But became irrational
+- Depression
+
+Pain makes you stupid because blood diverted from brain doing higher order functions to parts of brain doing lower order functions.
+
+### Adaptive market hypothesis
+
+- Risk/reward relation is not stable (non-linear)
+- Risk premia are time varying
+- Limited arbitrage exists from time to time
+- Stragies wax and wane
+- Adaptation and innovation are keys to survival
+- Survival is all that matters
