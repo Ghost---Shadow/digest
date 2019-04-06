@@ -567,3 +567,9 @@ Pain makes you stupid because blood diverted from brain doing higher order funct
 - Stragies wax and wane
 - Adaptation and innovation are keys to survival
 - Survival is all that matters
+
+## 20. Efficient Markets III & Course Summary
+
+- Profits are like an anesthetic against risk
+
+*Read about theory of adaptive markets*
