@@ -4,7 +4,7 @@
 
 **Source Code:** [Github](https://github.com/huggingface/transformers/blob/master/examples/rag/)
 
-**Datasets:** natural questions, trivia QA, web questions, curated trec, open ms marco, jeopardy, fever
+**Datasets:** natural questions, trivia QA, web questions, curated trec, open ms marco, jeopardy, fever, [TempLAMA](https://github.com/google-research/language/tree/master/language/templama)
 
 **Time to read:** ?
 
