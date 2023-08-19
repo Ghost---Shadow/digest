@@ -13,6 +13,8 @@
 
 ## How does it solve it?
 
+![generator](./reacc_generator.png)
+![semantic](./reacc_semantic.png)
 
 ### Model
 
