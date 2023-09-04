@@ -85,3 +85,7 @@ bert-base-uncased as embedding
 ## What I still do not understand?
 
 ## Ideas to pursue
+
+## Similar papers
+
+- [Diverse Multi-Answer Retrieval with Determinantal Point Processes](https://arxiv.org/abs/2211.16029)
