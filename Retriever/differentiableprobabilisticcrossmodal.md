@@ -18,7 +18,12 @@ ClipTextVisionEmbeddings but many to many
 
 ### Training flow
 
+1. Generate embeddings for text/image pairs
+2. Apply loss
+
 ### Inference
+
+Similar to CLIP
 
 ### Equations
 
@@ -88,7 +93,13 @@ def ASPq(DC, DS):
 - Montecarlo L2 loss - Using PCME sample many points and do L2 loss on vectors. Average the loss.
 - CIDEr - cosine similarity of TF-IDF feature vectors between query and each element in database
 
+## GPU hours
+
+280 RTX6000 hours (estimated)
+
 ## Key takeaways
+
+- Montecarlo L2 loss - Using PCME sample many points and do L2 loss on vectors. Average the loss.
 
 ## What I still do not understand?
 
