@@ -84,6 +84,10 @@ def ASPq(DC, DS):
 
 ## List of experiments
 
+- PMRP
+- recall@k
+- ASP
+
 ## Preliminaries
 
 - Canonical Correlation Analysis (CCA) - Two sets of learned weights that when applied to X and Y maximizes their correlation.
