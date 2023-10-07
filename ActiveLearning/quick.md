@@ -16,3 +16,8 @@ active learning on untrained models do more harm than good
 ## [Efficient Active Learning with Abstention](https://proceedings.neurips.cc/paper_files/paper/2022/file/e5aa7171449b83f8b4eec1623eac9906-Supplemental-Conference.pdf)
 
 If the model predicts "I dont know" then dont lookup the real groundtruth y.
+
+## [Active Learning Through a Covering Lens](https://arxiv.org/abs/2205.11320)
+
+1. Semantically embed all points
+2. Pick the points that have most neighbours within a sphere
