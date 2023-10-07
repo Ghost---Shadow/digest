@@ -21,3 +21,10 @@ If the model predicts "I dont know" then dont lookup the real groundtruth y.
 
 1. Semantically embed all points
 2. Pick the points that have most neighbours within a sphere
+
+## [Active Surrogate Estimators: An Active Learning Approach to Label–Efficient Model Evaluation](https://arxiv.org/abs/2202.06881)
+
+1. Have an auxilary model
+2. Peturb the auxilary model's parameters
+3. Measure disagreement between the two, scale the learning rate for that sample with this
+4. Also, penalize the primary model more if the confidence of aux model is high.
