@@ -28,3 +28,7 @@ The training flow will be
 1. Take two clip models, teacher and student
 2. Train with two losses mentioned (weighted addition hyperparameter)
 3. Periodically update the teacher model
+
+## [Learning to Prompt for Vision-Language Models](https://arxiv.org/pdf/2109.01134.pdf)
+
+Softprompts for CLIP
