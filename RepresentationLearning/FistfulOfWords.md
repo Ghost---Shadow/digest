@@ -67,8 +67,6 @@ CLIP
 
 ## Similar papers
 
-Here's a summary of each cited paper in Section 4 "Related Works" of the document:
-
 * **[41] & [42]**: Studies text deformation in natural language understanding tasks.
 * **[47]**: Discusses self-training in the context of semi-supervised learning.
 * **[5]**: Pertains to the literature of semi-supervised learning.
