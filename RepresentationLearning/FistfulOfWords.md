@@ -16,7 +16,7 @@ Better CLIP
 
 ## How does it solve it?
 
-![BALLAD](./FistfulOfWords.png)
+![FistfulOfWords](./FistfulOfWords.png)
 
 ### Training flow
 
@@ -33,6 +33,8 @@ Better CLIP
 5. **Keep(n)**: Retains only the first n words of a caption, used in conjunction with other operations to keep a few random words from the original caption.
 
 ### Utilizing Unaligned Images
+
+![FistfulOfWords2](./FistfulOfWords2.png)
 
 For images without a caption, run a KNN on the labled dataset with image as query and associated label as output.
 
