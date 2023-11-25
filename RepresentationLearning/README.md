@@ -32,3 +32,11 @@ The training flow will be
 ## [Learning to Prompt for Vision-Language Models](https://arxiv.org/pdf/2109.01134.pdf)
 
 Softprompts for CLIP
+
+## [VLMO: Unified Vision-Language Pre-Training with Mixture-of-Modality-Experts](https://arxiv.org/pdf/2111.02358.pdf)
+
+1. Finetune vision adapter for vision pretraining (VFFN)
+2. Finetune text adapter for text pretraining (LFFN)
+3. Finetune 1, 2 and a 3rd adapter for text-vision pretraining (VLFFN)
+
+![VLMO](VLMO.png)
