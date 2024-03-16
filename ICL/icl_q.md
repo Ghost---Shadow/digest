@@ -6,20 +6,26 @@
 * Year - 2022
 * Author - University of Chicago
 * Code - 
-* One liner - 
+* One liner - Use 3-layer MLP policy network to choose the next best shot to compose few shot
 * Model - GPT2, GPT3 (all sizes)
 * Datasets - AGNews, Amazon reviews, SST-2, TREC
 
 ## Overview
 
-![Q-star](active_example_q_equation.png)
+![Q-star](icl_q_diagram.png)
+
+![Q-star](icl_q_q.png)
+
+![results](icl_q_results.png)
 
 ## Training flow
 
 ### Data for off-policy RL training
 
-1. Randomly select few shots and incrementally add them and record the confidence of correct answer
-2. Few shot + prompt is state, next shot to select is action and confidence is reward
+1. Randomly select few shots 
+2. Incrementally add them and evaluate the model.
+3. Record the confidence of correct answer
+4. Few shot + prompt is state, next shot to select is action and confidence is reward
 
 ### Training policy network
 
