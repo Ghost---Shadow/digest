@@ -9,6 +9,7 @@
 * One liner - Train a semantic search model to find things a generative LLM would find useful in context.
 * Model - BERT-base, GPT3, CODEX, GPT-J, GPT-neo
 * Datasets - break, mtop, smcalflow
+* Baselines - random, sbert, bm25, bruteforce, CBR (https://arxiv.org/abs/2104.08762)
 
 ## Overview
 
