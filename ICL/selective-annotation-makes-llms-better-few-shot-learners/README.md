@@ -1,9 +1,9 @@
-# [SELECTIVE ANNOTATION MAKES LANGUAGE MODELS BETTER FEW-SHOT LEARNERS](https://arxiv.org/pdf/2209.01975.pdf)
+# [SELECTIVE ANNOTATION MAKES LANGUAGE MODELS BETTER FEW-SHOT LEARNERS](https://openreview.net/pdf?id=qY1hlv7gwg)
 
 ## Meta
 
-* Journal -
-* Year - 2022
+* Journal - ICLR
+* Year - 2023
 * Author - The University of Hong Kong, University of Washington, Allen Institute for AI, Penn State University, Carnegie Mellon University, Meta AI
 * Code - https://github.com/HKUNLP/icl-selective-annotation
 * One liner - Deduplication with exponential push away force
