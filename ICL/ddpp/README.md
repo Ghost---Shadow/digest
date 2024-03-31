@@ -91,7 +91,7 @@ def two_stage_dpp_selection(training_data, language_model, candidate_subset_size
     return demonstration_subset
 ```
 
-### List of experiments
+## List of experiments
 
 * Comparisons of the three factors: semantic diversity, instance quality, and influence diversity. We list the
 4-shot performance on SST-2 for three LLMs: GPT2-xl (1.5B), GPT-J (6B), and GPT-NeoX (20B)
