@@ -1,29 +1,24 @@
 # [Compositional Exemplars for In-context Learning](https://arxiv.org/abs/2302.05698)
 
-**Source Code:** [Github](https://github.com/HKUNLP/icl-ceil)
+## Meta
 
-**Datasets:** WebQs, GeoQuery, NL2Bash, MTOP, and SMCalFlow, LFEM
+* Journal - ICML
+* Year - 2023
+* Author - Hong Kong University
+* Code - https://github.com/HKUNLP/icl-ceil
+* One liner - We optimize the embedding space for retrieval in such a way that, given a question, the volume spanned by embeddings of relevant documents is larger than non-relevant documents.
+* Model - GPT-Neo-2.7B, bert-base-uncased
+* Datasets - WebQs, GeoQuery, NL2Bash, MTOP, and SMCalFlow, LFEM
+* Baselines - Random, BM25-topk, BERT-topk, [EPR](https://aclanthology.org/2022.naacl-main.191.pdf)
 
-**Author:** Hong Kong University
-
-**Journal:** ICML
-
-**Year of Submission:** 2023
-
-## What problem does it solve?
-
-## How does it solve it?
-
-> We optimize the embedding space for retrieval in such a way that, given a question, the volume spanned by embeddings of relevant documents is larger than non-relevant documents.
-
-### Training flow
+## Training flow
 
 1. For an incoming question, create and embedding. Find n most similar documents from the database N.
 2. Take each document and question and check the likelihood of answering the question using a generating LLM.
 3. Sort the documents by this score and divide into two parts. S+ and S-. S+ being highest scoring half and S- being lowest scoring half.
 4. Use the contrastive loss to train the embedding model. It enforces both quality and diversity.
 
-### Inference
+## Inference flow
 
 1. For an incoming question, create and embedding. Find n most similar documents from the database N.
 2. Add the top example to S_map
@@ -31,7 +26,7 @@
 4. Put the best document in S_map
 5. Repeat until S_map is of target size
 
-### Equations
+## Equations
 
 ~k(ai, aj | x) = g(ai, x) k(ai, aj) g(aj , x)
 
@@ -70,21 +65,20 @@ logP(S−)−logP(S+)
 
 j=arg maxi∈Z∖Smap​​[logdet(LSmap​∪{i}′​)−logdet(LSmap​′​)]
 
-### Model
+## Experiments
 
-GPT-Neo-2.7B as generator
+- Downstream LLM accuracy
+- Inferencer transfer
+- different contrastive loss ablations
+- sampling strategy ablations
+- number of in context examples
+- inference latency vs num shots
 
-bert-base-uncased as embedding
-
-## How is this paper novel?
+## Proofs
 
 ## Key takeaways
 
 - Using a smaller generator model for training and then using larger for inference can cut down costs
-
-## What I still do not understand?
-
-## Ideas to pursue
 
 ## Similar papers
 
