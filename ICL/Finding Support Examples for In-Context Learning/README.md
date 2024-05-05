@@ -6,7 +6,7 @@
 * Year - 2023
 * Author - Fudan University
 * Code - 
-* One liner -
+* One liner - Graph cut diversity, and informativeness quality
 * Model - GPT2L
 * Datasets - SST2, SST5, amazon reviews MR, subj, trec, agnews, dbpeadia
 * Baselines - zeroshot, random, herding, kcenter, entropy, least confidence, margin, cal, forgetting, grand, craig, gradmatch, fl, gc, glister, random and valid, lens
