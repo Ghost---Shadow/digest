@@ -2,14 +2,14 @@
 
 ## Meta
 
-* Journal - Neurips
-* Year - 2024
-* Author - Harbin Institute of Technology, University of Macau
-* Code - https://github.com/Blue-Raincoat/SelectIT
-* Slides - https://neurips.cc/media/neurips-2024/Slides/95238.pdf
+* Journal   - Neurips
+* Year      - 2024
+* Author    - Harbin Institute of Technology, University of Macau
+* Code      - https://github.com/Blue-Raincoat/SelectIT
+* Slides    - https://neurips.cc/media/neurips-2024/Slides/95238.pdf
 * One liner - Ask the model to generate a score for the output it just generated. Then do mixture of rating prompts and mixture of models.
-* Model - LLaMA-2, Mistral-7B, LLaMA-3-8B 
-* Datasets - MMLU, BBH, GSM, TydiQA, CodeX, AE, WizardLM, Orca-GPT4, WMT17
+* Model     - LLaMA-2, Mistral-7B, LLaMA-3-8B 
+* Datasets  - MMLU, BBH, GSM, TydiQA, CodeX, AE, WizardLM, Orca-GPT4, WMT17
 * Baselines - [Alpaca-GPT4](./Alpaca-GPT4.md), [LIMA](./LIMA.md), [AlpaGasus](./AlpaGaus.md), [Q2Q](./Q2Q.md), [Instruction Mining](./InstructionMining.md)
 
 ## Flow
