@@ -29,7 +29,7 @@ $$
 with:
 
 $$
-\text{NLL}(e_j) = -\log\left( P(e_j|e_{<j}, I;\theta) \right).
+\text{NLL}(e_j) = -\log( P(e_j|e_{<j}, I;\theta))
 $$
 
 **Breakdown**:
