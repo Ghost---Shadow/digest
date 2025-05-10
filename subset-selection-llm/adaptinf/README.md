@@ -20,9 +20,9 @@ Below is a breakdown of each formula along with an explanation of each variable 
 
 The formula is given by:
 
-\[
+$
 \text{PPL}(z_i) = \exp\!\left(\frac{1}{|z_i|} \sum_{e_j \in z_i} \text{NLL}(e_j)\right), \quad \text{where} \quad \text{NLL}(e_j) = -\log\Big(p(e_j \mid e_{<j}, I; \theta)\Big)
-\]
+$
 
 Explanation:
 - \( z_i \): A multimodal data instance, which typically consists of a sequence of tokens (words or subwords) in text and possibly associated image information.
