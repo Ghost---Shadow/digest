@@ -7,7 +7,7 @@
 * **Year**: 2025
 * **Authors**: University of Illinois Urbana-Champaign, IBM Research
 * **Code**: [GitHub link](https://github.com/agarwalishika/delift)
-* **One liner**: Proposes DELIFT, a data-efficient framework leveraging a novel utility metric for fine-tuning large language models by selecting informative data subsets at each tuning stage.
+* **One liner**: Compute advantage matrix of using a 1-shot over not using it for all data, 1-shot pairs. Use submodular subset selection to pick the best ones.
 * **Models**: Llama-3.2-3B, Mistral-7B-v0.1, opt-125m, Qwen2-72B-Instruct, Phi-3-mini-128k-instruct
 * **Datasets**: Mix-Instruct, P3, HotpotQA, MMLU, MT-Bench, GSM-8k, SQuAD, IBM/Government domain query rewriting dataset
 * **Baselines**: Full Data, Random, SelectIT, LESS, DEFT-UCS, DELIFT (SE)

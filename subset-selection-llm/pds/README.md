@@ -10,7 +10,7 @@
   2. Microsoft Research 
   3. Peking University
 * **Code**: [GitHub Repository](https://github.com/microsoft/LMOps/tree/main/data_selection)
-* **One-liner**: Using Optimal Control theory to select high-quality pre-training data for improving language models' efficiency and performance.
+* **One-liner**: TODO
 * **Model**: LIMA
 * **Datasets**: CommonCrawl, LIMA
 * **Baselines**: Conventional Pre-Training, RHO-Loss, DSIR, IF-Score

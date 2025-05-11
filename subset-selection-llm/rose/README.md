@@ -7,7 +7,7 @@
 - **Year**: 2025
 - **Author**: Anonymous (under double-blind review)
 - **Code**: To be made publicly available upon acceptance
-- **One Liner**: A novel data selection method, ROSE, leverages pairwise preference loss for enhancing task-specific instruction tuning of LLMs.
+- **One Liner**: How much does the validation score improve if we do a step on a particular data sample? Use a proxy model to estimate that, that is quality.
 - **Models**: Llama (LLAMA-2-7B, LLAMA-2-13B, LLAMA-3.1-8B, LLAMA-3.1-8B-INS), Mistral (MISTRAL-7B-V0.3, MISTRAL-7B-INS-V0.3)
 - **Datasets**: DOLLY, OPEN ASSISTANT 1, FLAN V2, COT; Evaluation: SHP, Stack Exchange (SE), HH-RLHF
 - **Baselines**: Random, BM25, Representation-based data selection (RDS), DSIR, Influence Functions, LESS, Shapley values

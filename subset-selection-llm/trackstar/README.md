@@ -7,7 +7,7 @@
 * **Year** - 2025
 * **Author** - Google DeepMind, UC San Diego
 * **Code** - [Github link](https://github.com/pair-code/pretraining-tda)
-* **One-liner** - The paper refines gradient-based methods for scalable influence and fact tracing in large language model pretraining without subsampling or pre-filtering.
+* **One-liner** - Dot product of downprojected hessians as quality score
 * **Model** - 154M, 1B, and 8B parameter language models
 * **Datasets** - English C4, T-REx, KILT
 * **Baselines** - BM25, Gecko embeddings, TRAK, various ablated versions of TrackStar

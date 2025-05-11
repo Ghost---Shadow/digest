@@ -7,7 +7,7 @@
 * **Year:** 2025
 * **Authors:** Xi’an Jiaotong University, Nanyang Technological University, University of Massachusetts, Amherst
 * **Code:** [GitHub Repository](https://github.com/shiningrain/STAFF)
-* **One-liner:** Introducing STAFF, a coreset selection method leveraging small models to efficiently guide task-specific fine-tuning of large language models.
+* **One-liner:** Speculate scores from larger model from smaller model
 * **Models Used:** Gemma-7b, Llama-2-13b, Mistral-Nemo-Instruct-2407
 * **Datasets Used:** BioInstruct, DialogSum, WMT-19 (Kazakh-English subset)
 * **Baselines Compared:** Random, GraNd, EL2N, CCS, D2 Pruning

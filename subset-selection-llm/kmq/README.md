@@ -7,7 +7,7 @@
 - **Year**: 2025
 - **Author**: Anonymous (authors' affiliations not provided due to double-blind review)
 - **Code**: Code is submitted as supplementary materials (no specific GitHub link provided)
-- **One-liner**: The paper proposes a diversity-focused data selection approach using iterative refinement to enhance the fine-tuning of large language models on instruction data.
+- **One-liner**: K-means it for diversity and then find ratio of perplexity of generated to gold as quality score
 - **Model**: Llama-2-7B, Llama-3-8B, Mistral-7B
 - **Datasets**: Alpaca, WizardLM
 - **Baselines**: Random selection, Deita, QDIT, k-Center, kM-Closest, kM-Random, Iterative kMQ

@@ -7,7 +7,7 @@
 - **Year**: 2025
 - **Author**: Department of Computer Science, UNC Chapel Hill
 - **Code**: [GitHub Repository](https://github.com/adymaharana/adapt-inf)
-- **One Liner**: The paper introduces Adapt-∞, a multi-way adaptive data selection method to efficiently train large multimodal language models by dynamically balancing data selection.
+- **One Liner**: Compute gradients, run K-means and cluster then select the most informative samples (entrophy) from each cluster.
 - **Model**: LLaVA 1.5; smaller models like TinyLLaVA are used for efficiency analysis.
 - **Datasets**: LLaVA-1.5, M3IT, MiniGPT4, MANTIS, LAMM, VisionFLAN for the main experiments, and MMLU for evaluation.
 - **Baselines**: Multi-task training, Sequential training, Random Experience Replay, Score-based methods (e.g., Perplexity, EL2N), SemDeDup, Density-based Pruning, COINCIDE.

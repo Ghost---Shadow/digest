@@ -7,7 +7,7 @@
 * **Year**: Not specified
 * **Authors**: School of Computer Science, Fudan University; Shanghai Key Laboratory of Intelligent Information Processing, Fudan University
 * **Code**: [GitHub link](https://github.com/LeeSureman/ICL_Support_Example)
-* **One-liner**: The paper proposes the LENS method to find "support examples" for in-context learning that improve performance by selecting informative and representative examples from a dataset.
+* **One-liner**: Use perplexity advantage for quality and cosine similarity based diversity
 * **Model**: GPT-2 (specifically GPT2-L)
 * **Datasets**: SST-2, SST-5, Amazon, MR, Subj, TREC, AGNews, DBPedia
 * **Baselines**: Zero-shot, Random, Random & Validation, Herding, K-Center Greedy, Entropy, Least Confidence, Margin, Cal, Forgetting, GraNd, CRAIG, GradMatch, Facility Location, Graph Cut, Glister
@@ -26,17 +26,17 @@ $$
 
 where:
 
-- $$G$$ represents the language model used for in-context learning.
-- $$\{x_i, y_i\}_{i=1}^{n}$$ is the set of $$n$$ in-context examples, each consisting of an input $$x_i$$ and its corresponding label or output $$y_i$$.
-- $$x_{test}$$ is the test input for which we want to generate a prediction.
-- $$Y$$ denotes the label space over which the prediction is made.
-- $$\oplus$$ represents the concatenation operation.
-- $$p_{G}(y \mid \cdot)$$ is the probability estimated by the language model for generating output $$y$$ given the concatenated prompt.
-- $$\arg\max_{y \in Y}$$ means that the overall prediction is the label $$y$$ that maximizes the conditional probability.
+- $G$ represents the language model used for in-context learning.
+- $\{x_i, y_i\}_{i=1}^{n}$ is the set of $n$ in-context examples, each consisting of an input $x_i$ and its corresponding label or output $y_i$.
+- $x_{test}$ is the test input for which we want to generate a prediction.
+- $Y$ denotes the label space over which the prediction is made.
+- $\oplus$ represents the concatenation operation.
+- $p_{G}(y \mid \cdot)$ is the probability estimated by the language model for generating output $y$ given the concatenated prompt.
+- $\arg\max_{y \in Y}$ means that the overall prediction is the label $y$ that maximizes the conditional probability.
 
 2. **InfoScore Formula**
 
-The InfoScore quantifies the individual in-context informativeness of a single example $$e = \{x, y\}$$ using feedback from the language model:
+The InfoScore quantifies the individual in-context informativeness of a single example $e = \{x, y\}$ using feedback from the language model:
 
 $$
 I(e, D) = \sum_{e' \in D} c(e, e'),
@@ -44,11 +44,11 @@ $$
 
 where:
 
-- $$e = \{x, y\}$$ is the example, composed of input $$x$$ and label $$y$$.
-- $$D$$ is the training dataset over which the informativeness score is aggregated.
-- $$e' = \{x', y'\}$$ is an element of the training dataset.
-- $$c(e, e') = p_{G}(y' \mid x, y, x') - p_{G}(y' \mid x')$$ measures the contribution gap of $$e$$ when predicting $$y'$$.
-- $$I(e, D)$$ reflects the overall informativeness of the example $$e$$ across the training set.
+- $e = \{x, y\}$ is the example, composed of input $x$ and label $y$.
+- $D$ is the training dataset over which the informativeness score is aggregated.
+- $e' = \{x', y'\}$ is an element of the training dataset.
+- $c(e, e') = p_{G}(y' \mid x, y, x') - p_{G}(y' \mid x')$ measures the contribution gap of $e$ when predicting $y'$.
+- $I(e, D)$ reflects the overall informativeness of the example $e$ across the training set.
 
 3. **Diversity-Guided Example Update Formula**
 
@@ -66,12 +66,12 @@ $$
 
 Details of the components:
 
-- $$e^*$$ is the previously chosen example being updated.
-- $$e^*_{new}$$ is the updated example from subset $$D'$$.
-- $$f(e) = \Bigl[c(e, e^s_1),\; c(e, e^s_2),\; \ldots,\; c(e, e^s_{|S|})\Bigr]$$ is the feature vector of the example $$e$$.
+- $e^*$ is the previously chosen example being updated.
+- $e^*_{new}$ is the updated example from subset $D'$.
+- $f(e) = \Bigl[c(e, e^s_1),\; c(e, e^s_2),\; \ldots,\; c(e, e^s_{|S|})\Bigr]$ is the feature vector of the example $e$.
 
 **Summary**:
-- The first formula selects the output $$y$$ for the test input that maximizes the likelihood using in-context examples.
+- The first formula selects the output $y$ for the test input that maximizes the likelihood using in-context examples.
 - The InfoScore formula measures how much a given example improves prediction probabilities over a dataset.
 - The Diversity-Guided Example Update Formula combines informativeness and diversity to select the best candidate.
 

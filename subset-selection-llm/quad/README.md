@@ -7,7 +7,7 @@
 * **Year**: 2025
 * **Authors**: Beijing Institute of Technology, SenseTime Research, Shanghai Artificial Intelligence Laboratory, University of Arizona, Renmin University of China
 * **Code**: [Github link](https://anonymous.4open.science/r/Quad/)
-* **One-liner**: Introduces Quad, a data selection method balancing quality and diversity to enhance pretraining of large language models.
+* **One-liner**: K-means clustering for diversity. Similarity of gradients with validation set for quality.
 * **Model**: GPT-4, LLaMA-3.1
 * **Datasets**: SlimPajama, FineWeb, LAMBADA, Openwebmath, FLAN
 * **Baselines**: Random sampling, Qurating, DSIR, PPL, MATES
@@ -18,53 +18,53 @@ Here is a detailed breakdown of each variable in the key formulas, along with ex
 
 ### Influence Function
 
-The influence of a data instance \(z\) on a model \(\theta\) is computed as:
+The influence of a data instance $z$ on a model $\theta$ is computed as:
 
-\[ I_\theta(D_r, z) = -\nabla L(\theta, D_r) \, (H + \lambda I)^{-1} \, \nabla L(\theta, z) \]
+$$ I_\theta(D_r, z) = -\nabla L(\theta, D_r) \, (H + \lambda I)^{-1} \, \nabla L(\theta, z) $$
 
 **Variable Breakdown**:
-- **\(I_\theta(D_r, z)\)**: Influence of data instance \(z\) on model parameters \(\theta\), relative to a reference dataset \(D_r\).
-- **\(\nabla L(\theta, D_r)\)**: Gradient of the loss function \(L\) with respect to \(\theta\), calculated over the dataset \(D_r\).
-- **\(\nabla L(\theta, z)\)**: Gradient of the loss function \(L\) with respect to \(\theta\) for a single data instance \(z\).
-- **\(H\)**: Hessian matrix, second derivative of the loss \(L\) with respect to \(\theta\).
-- **\(\lambda\)**: Regularization parameter ensuring \(H + \lambda I\) is invertible.
-- **\(I\)**: Identity matrix.
+- **$I_\theta(D_r, z)$**: Influence of data instance $z$ on model parameters $\theta$, relative to a reference dataset $D_r$.
+- **$\nabla L(\theta, D_r)$**: Gradient of the loss function $L$ with respect to $\theta$, calculated over the dataset $D_r$.
+- **$\nabla L(\theta, z)$**: Gradient of the loss function $L$ with respect to $\theta$ for a single data instance $z$.
+- **$H$**: Hessian matrix, second derivative of the loss $L$ with respect to $\theta$.
+- **$\lambda$**: Regularization parameter ensuring $H + \lambda I$ is invertible.
+- **$I$**: Identity matrix.
 
 ### Cluster Score (CS)
 
 Using an Upper Confidence Bound (UCB) method:
 
-\[ CS_i = \bar{I}_i + \alpha \sqrt{\frac{2 \ln \left(\sum_{j} T(C_j)\right)}{T(C_i)}} \]
+$$ CS_i = \bar{I}_i + \alpha \sqrt{\frac{2 \ln \left(\sum_{j} T(C_j)\right)}{T(C_i)}} $$
 
 **Variable Breakdown**:
-- **\(CS_i\)**: Score for cluster \(C_i\).
-- **\(\bar{I}_i\)**: Average influence score of instances within cluster \(C_i\).
-- **\(T(C_i)\)**: Number of times data instances have been sampled from cluster \(C_i\).
-- **\(\sum_{j} T(C_j)\)**: Total samples across all clusters.
-- **\(\alpha\)**: Hyperparameter balancing exploration and exploitation.
+- **$CS_i$**: Score for cluster $C_i$.
+- **$\bar{I}_i$**: Average influence score of instances within cluster $C_i$.
+- **$T(C_i)$**: Number of times data instances have been sampled from cluster $C_i$.
+- **$\sum_{j} T(C_j)$**: Total samples across all clusters.
+- **$\alpha$**: Hyperparameter balancing exploration and exploitation.
 
 ### Kronecker Product for Attention Layers
 
 The Hessian matrix for QKV layers is approximated as:
 
-\[ H_{qkv} = E\left(\delta_{qkv}\delta_{qkv}^T\right) \otimes E\left(x_{qkv}x_{qkv}^T\right) \]
+$$ H_{qkv} = E\left(\delta_{qkv}\delta_{qkv}^T\right) \otimes E\left(x_{qkv}x_{qkv}^T\right) $$
 
 **Variable Breakdown**:
-- **\(H_{qkv}\)**: Approximated Hessian for QKV layers.
-- **\(\delta_{qkv}\)**: Gradient information for QKV layers.
-- **\(x_{qkv}\)**: Input vector for QKV layers.
-- **\(E\left(\delta_{qkv}\delta_{qkv}^T\right)\)**: Expectation of outer product of \(\delta_{qkv}\).
-- **\(E\left(x_{qkv}x_{qkv}^T\right)\)**: Expectation of outer product of \(x_{qkv}\).
-- **\(\otimes\)**: Kronecker product operator.
+- **$H_{qkv}$**: Approximated Hessian for QKV layers.
+- **$\delta_{qkv}$**: Gradient information for QKV layers.
+- **$x_{qkv}$**: Input vector for QKV layers.
+- **$E\left(\delta_{qkv}\delta_{qkv}^T\right)$**: Expectation of outer product of $\delta_{qkv}$.
+- **$E\left(x_{qkv}x_{qkv}^T\right)$**: Expectation of outer product of $x_{qkv}$.
+- **$\otimes$**: Kronecker product operator.
 
 These formulas showcase how quality and diversity are balanced in the Quad method, improving model performance by selecting influential and diverse data for pretraining.
 
 ## Training Flow
 
-1. **Define Problem**: Select subset \(D_b\) from a large candidate pool \(D_c\) for pre-training with respect to reference \(D_r\).
+1. **Define Problem**: Select subset $D_b$ from a large candidate pool $D_c$ for pre-training with respect to reference $D_r$.
 
 2. **Quad Method Application**:
-   - **Clustering**: Cluster \(D_c\) into groups, ensuring similarity within and diversity across groups.
+   - **Clustering**: Cluster $D_c$ into groups, ensuring similarity within and diversity across groups.
    - **Score Calculation**: Estimate average influence score using an attention-based architecture.
 
 3. **Data Quality and Diversity Balance**:
@@ -99,16 +99,16 @@ def quad_data_selection(candidate_pool, reference_set, model):
 
 ## Inference Flow
 
-1. **Data Clustering**: Organize \(D_c\) into clusters using K-means.
+1. **Data Clustering**: Organize $D_c$ into clusters using K-means.
 2. **Multi-Armed Bandit Framework**:
-   - Treat clusters as arms and compute \(CS_i\).
+   - Treat clusters as arms and compute $CS_i$.
    - Select top-K clusters for further processing.
 3. **Influence Calculation**:
    - Sample data to compute influence scores using the influence function.
 4. **Data Sampling and Selection**:
    - Update sampling priorities and refine selection.
 5. **Model Training**:
-   - Incorporate selected data into training to minimize loss on \(D_r\).
+   - Incorporate selected data into training to minimize loss on $D_r$.
 
 ### Inference Flow Code
 
@@ -142,7 +142,7 @@ train_llm(training_data)
 - Time cost comparison between different sampling thresholds (Table 11)
 - Evaluation of influence calculation accuracy on MLP vs. attention layers (Figure 4b)
 - Candidate score vs. performance on downstream task correlation (Figure 4c)
-- Ablation study on influence threshold \(\tau\) (Figure 4d)
+- Ablation study on influence threshold $\tau$ (Figure 4d)
 - Exploration of MAB vs. top-k clusters (Figure 4a)
 - Continuous pretrain exploration with Openwebmath as a reference set (Figure 7d)
 - Clustering algorithm effect (Figure 5c)

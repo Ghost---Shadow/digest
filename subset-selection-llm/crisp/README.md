@@ -7,7 +7,7 @@
 - **Year:** 2025
 - **Author:** Apple
 - **Code:** Not available
-- **One-liner:** The paper proposes a novel method, CRISP, for building task-specialist language models by adapting training data from large generalist datasets through clustered importance sampling.
+- **One-liner:** Cluster data. Sample data weighted by their score ratio of "specialist" to "generalist" datasets.
 - **Model:** Not specified; implied models range from 350M to 7B parameter LLMs.
 - **Datasets:** Redpj2, PubMed Central, StackExchange, Wikipedia, AI2 Reasoning Challenge (ARC), Massive Multitask Language Understanding (MMLU), and Reward Bench Reasoning (RWDB-R).
 - **Baselines:** Fine-tuning generalist models, task-specific pretraining, DoGE method, cross-entropy difference (CED) method.
