@@ -1,100 +1,129 @@
-# DATA SELECTION VIA OPTIMAL CONTROL FOR LANGUAGE MODELS
+# Data Selection via Optimal Control for Language Models
 
 ## Meta
 
 * **Name**: DATA SELECTION VIA OPTIMAL CONTROL FOR LANGUAGE MODELS
 * **Journal**: ICLR
 * **Year**: 2025
-* **Authors**: The CoAI Group, Tsinghua University; Microsoft Research; Peking University
-* **Code**: [Github Link](https://github.com/microsoft/LMOps/tree/main/data_selection)
-* **One-liner**: Utilizing Optimal Control theory to enhance language models by selecting high-quality pre-training data efficiently.
+* **Authors**: 
+  1. The CoAI Group, Tsinghua University
+  2. Microsoft Research
+  3. Peking University
+* **Code**: [Microsoft LMOps GitHub](https://github.com/microsoft/LMOps/tree/main/data_selection)
+* **One-liner**: Utilizing Optimal Control theory to choose high-quality pre-training data to enhance language models' efficiency and performance.
 * **Model**: LIMA
 * **Datasets**: CommonCrawl, LIMA
 * **Baselines**: Conventional Pre-Training, RHO-Loss, DSIR, IF-Score
 
-## Formulas and Key Concepts
+## Formulas
 
-### 1. Dynamics of Model Training
+The paper delineates a method for data selection using optimal control in the context of language model pre-training. Key formulas and their components are as follows:
 
-The evolution of model parameters is governed by the formula:
+### 1. General Pre-training Loss
 
-\[
-\theta_{t+1} = \theta_t - \eta \nabla L(\theta_t, \gamma).
-\]
+The pre-training loss is defined as:
 
-- \(\theta_t\), \(\theta_{t+1}\): Model parameters at step \(t\) and \(t+1\).
-- \(\eta\): Learning rate.
-- \(\nabla L(\theta_t, \gamma)\): Gradient of the loss function.
-- \(L(\theta, \gamma)\): Defined as \(\sum_{n=1}^{|D|} \gamma_n\, l(x_n, \theta)\).
+$$
+L(\theta, \gamma) = \sum_{n=1}^{|D|} \gamma_n\, l(x_n, \theta),
+$$
 
-### 2. Overall Optimization Problem
+where the individual instance loss is:
 
-The goal is to:
+$$
+l(x_n, \theta) = -\log p_\theta(x_n).
+$$
 
-\[
+**Symbols:**
+
+- $\theta$: Parameters of the language model.
+- $\gamma$: Vector of data selection weights for training instances.
+- $|D|$: Total instances in dataset $D$.
+- $x_n$: The $n$th instance from $D$.
+- $p_\theta(x_n)$: Probability assigned by the model to $x_n$.
+- $l(x_n, \theta)$: Negative log-likelihood of $x_n$.
+
+### 2. Optimization Problem for Data Selection
+
+The optimization is set as:
+
+$$
 \min_{\gamma} \sum_{t=1}^{T} J(\theta_t),
-\]
+$$
 
 subject to:
 
-\[
-\theta_{t+1} = \theta_t - \eta \nabla L(\theta_t, \gamma), \quad \gamma \in U.
-\]
+$$
+\theta_{t+1} = \theta_t - \eta\, \nabla L(\theta_t, \gamma), \quad \gamma \in U.
+$$
 
-- \(J(\theta_t)\): Downstream loss function.
-- \(\gamma\): Vector of data quality scores with constraints formed by simplex \(U\).
+**Components:**
 
-### 3. Pontryagin's Maximum Principle (PMP) Conditions
+- $J(\theta_t)$: Downstream loss at training step $t$.
+- $T$: Total training steps.
+- $\eta$: Learning rate.
+- $\nabla L(\theta_t, \gamma)$: Gradient of loss.
+- $\gamma \in U$: Constraint on $\gamma$.
 
-Key conditions include:
+### 3. Data Selection as Optimal Control
 
-a) **State Evolution**:  
-\[
-\theta^*_{t+1} = \theta^*_t - \eta \nabla L(\theta^*_t, \gamma^*),
-\]
+Data Selection is framed as an optimal control problem:
 
-b) **Co-state Dynamics**:  
-\[
-\lambda^*_t = \lambda^*_{t+1} + \nabla J(\theta^*_t) - \eta \nabla^2 L(\theta^*_t, \gamma^*) \lambda^*_{t+1},
-\]
+**State Transition Equation:**
 
-c) **Optimal Control Condition**:  
-\[
-\gamma^* = \arg \max_{\gamma} \left\{ \sum_{n=1}^{|D|} \gamma_n \sum_{t=0}^{T-1} \lambda^*_{t+1} \cdot \nabla l(x_n, \theta^*_t) \right\}.
-\]
+$$
+\theta_{t+1} = \theta_t - \eta\, \nabla L(\theta_t, \gamma), \quad \gamma \in U.
+$$
 
-### 4. Implementation Considerations
+**Co-state Equation:**
 
-- **PMP-based Data Selection (PDS) Framework**: Employing small proxy models and data scorers to infer and apply data selection efficiently.
+$$
+\lambda_t = \lambda_{t+1} + \nabla J(\theta_t) - \eta\, \nabla^2 L(\theta_t, \gamma)\, \lambda_{t+1}.
+$$
+
+**Necessary Optimality Condition:**
+
+$$
+\gamma^* = \arg\max_{\gamma} \sum_{n=1}^{|D|} \gamma_n \sum_{t=0}^{T-1} \lambda_{t+1}^\top\, \nabla l(x_n, \theta_t).
+$$
 
 ## Training Flow
 
-### Overview
+### Steps
 
-1. Formulate the training problem as an optimal control problem.
-2. Optimize data quality scores \(\gamma\) using Pontryagin's Maximum Principle.
-3. Train with optimal conditions using proxy models for efficiency.
-4. Apply the trained data scorer to larger datasets for pre-training.
+1. Formulate language model pre-training as an optimal control problem.
+2. Introduce $\gamma$ as optimization targets for data quality scores.
+3. Solve using Pontryagin’s Maximum Principle for optimal data selection.
+4. Train using these conditions with small proxy models.
+5. Employ a data scorer to predict data quality scores.
+6. Pre-train the target model using selected high-quality data.
 
-### Pseudocode
+### High-Level Algorithmic Pseudocode
 
 ```python
-# Initialize
+# Initialize parameters
 theta_proxy = initialize_proxy_model(N_proxy)
 scorer_model = initialize_scorer_model(N_scorer)
-
-# Compute quality scores
 gamma = initialize_gamma(D_proxy)
+
 for epoch in range(num_outer_epochs):
+    # Forward pass
     for t in range(T_proxy):
         theta_proxy = gradient_update(theta_proxy, gamma, D_proxy)
+
+    # Backward pass
     lambda = compute_lambda(theta_proxy, J, T_proxy)
+
+    # Update gamma
     for n, x in enumerate(D_proxy):
-        gamma[n] += alpha * sum([np.dot(lambda[t], grad_loss(x, theta_proxy[t])) for t in range(T_proxy)])
+        gamma[n] += alpha * sum(
+            [np.dot(lambda[t], grad_loss(x, theta_proxy[t])) for t in range(T_proxy)])
+
     gamma = project_to_simplex(gamma)
 
-# Train data scorer and apply to full dataset
+# Train data scorer
 scorer_model = train_scorer(scorer_model, D_proxy, gamma)
+
+# Infer scores and select data
 scores = infer_scores(scorer_model, D)
 selected_data = select_top_k(scores, D, ratio=r)
 
@@ -105,48 +134,55 @@ trained_model = train_model(theta_target, selected_data, T_target)
 
 ## Inference Flow
 
-### Overview
+### Steps
 
-1. Initialize and train a proxy LM using PMP-derived conditions.
-2. Compute co-state vectors and update scores \(\gamma\).
-3. Train a data scorer on derived scores, and infer scores for complete data.
-4. Perform Gumbel-Top-K sampling to select data for final training.
+1. Initialize uniform data quality scores $\gamma$.
+2. Train a proxy LM, update parameters via gradient descent.
+3. Compute co-state vectors $\lambda$.
+4. Update $\gamma$ using data-gradient alignment with $\lambda$.
+5. Train data scorer to predict scores.
+6. Infer quality scores for complete data corpus.
+7. Use Gumbel-Top-K sampling for diverse data selection.
 
-### Pseudocode
+### Inference Code
 
 ```python
-def PMP_DataSelection(Dprx, LM_proxy, ..., learning_rate):
-    γ = torch.full((len(Dprx),), 1/len(Dprx))
+def PMP_DataSelection(Dprx, LM_proxy, num_iterations, learning_rate):
+    γ = torch.full((len(Dprx),), 1/len(Dprx))  # Initialize γ uniformly
+    
     for _ in range(num_iterations):
-        θ, training_dynamics = LM_proxy.train(Dprx, γ, T)
-        λ = compute_co_state_vectors(θ, training_dynamics, T)
+        θ, training_dynamics = LM_proxy.train(Dprx, γ, T)  # Train LM_proxy
+        λ = compute_co_state_vectors(θ, training_dynamics, T)  # Compute λ
         gradient_alignment = compute_gradient_alignment(λ, Dprx, θ)
         γ += learning_rate * gradient_alignment
         γ = project_to_simplex(γ)
+    
     return γ
 
 def TrainDataScorer(Dprx, γ, data_scorer_model):
-    return data_scorer_model.train(Dprx, γ)
+    data_scorer_model.train(Dprx, γ)
+    return data_scorer_model
 
-def InferAndSelect(D, ..., gumbel_strength):
+def InferAndSelect(D, data_scorer_model, selection_ratio, gumbel_strength):
     scores = data_scorer_model.infer(D)
-    return gumbel_top_k(scores, selection_ratio, gumbel_strength)
+    selected_data = gumbel_top_k(scores, selection_ratio, gumbel_strength)
+    return selected_data
 ```
 
 ## Experiments
 
-1. Scaling with model size and computation (Figure 1).
-2. Downstream evaluation performance (Tables 1 and 2, Figures 8).
-3. Test losses on the DCLM corpus (Figure 4, Table 3).
-4. Data utilization and reduction experiment (Figure 5).
-5. Efficient data quality score implementation (Figure 6).
-6. Loss scaling and extrapolation tests (Section I.4, Table 3, Figure 9).
-7. Ablation studies on various parameters (Figures 10 and 11, Tables 5 and 10).
+1. **Scaling Experiments**: Investigating training computation and model size scaling (Figure 1).
+2. **Performance Evaluation**: Varying model sizes on downstream datasets (Tables 1 and 2, Figures 8).
+3. **Test Losses**: DCLM corpus across model sizes and token limits (Figure 4, Table 3).
+4. **Data-Constrained Setting**: Data utilization and reduction measurement (Figure 5).
+5. **Efficient Implementation**: Addressing data quality score computation (Figure 6).
+6. **Scaling Law Extrapolation**: Comparison of loss scaling (Section I.4, Table 3, Figure 9).
+7. **Ablation Studies**: Examining components such as proxy models, selection ratio, Gumbel noise (Figures 10 and 11, Tables 5 and 10).
 
 ## Proofs
 
-1. **Theorem 2.1**: PMP Conditions for Data Selection.
-2. **Proof of Theorem 2.1**.
-3. **Theorem C.1**: PMP Data Selection for Adam.
+- **Theorem 2.1**: PMP Conditions for Data Selection
+- **Proof of Theorem 2.1**
+- **Theorem C.1**: PMP Data Selection for Adam
 
-This markdown file aims to ensure consistent formatting and presentation of the paper content, providing a clear and concise overview of the approach, its components, and associated experimental results.
+The document outlines a sophisticated approach to data selection using optimal control to enhance the efficiency and performance of language models.

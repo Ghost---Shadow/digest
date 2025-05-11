@@ -2,46 +2,42 @@
 
 ## Meta
 
-* **Name**: ADAPT-∞: Scalable Continual Multimodal Instruction Tuning via Dynamic Data Selection
-* **Journal**: Published as a conference paper at ICLR
-* **Year**: 2025
-* **Author**: Department of Computer Science, UNC Chapel Hill
-* **Code**: [GitHub Repository](https://github.com/adymaharana/adapt-inf)
-* **One-liner**: The paper introduces Adapt-∞, a multi-way adaptive data selection method to efficiently train large multimodal language models by dynamically balancing data selection.
-* **Model**: LLaVA 1.5, Lesser models like TinyLLaVA are used for efficiency analysis
-* **Datasets**: LLaVA-1.5, M3IT, MiniGPT4, MANTIS, LAMM, VisionFLAN for the main experiments, and MMLU for evaluation
-* **Baselines**: Multi-task training, Sequential training, Random Experience Replay, Score-based methods (e.g., Perplexity, EL2N), SemDeDup, Density-based Pruning, COINCIDE
+* **Name** - ADAPT-∞: Scalable Continual Multimodal Instruction Tuning via Dynamic Data Selection
+* **Journal** - Published as a conference paper at ICLR
+* **Year** - 2025
+* **Author** - Department of Computer Science, UNC Chapel Hill
+* **Code** - [GitHub Repo](https://github.com/adymaharana/adapt-inf)
+* **One-liner** - The paper introduces Adapt-∞, a multi-way adaptive data selection method to efficiently train large multimodal language models by dynamically balancing data selection.
+* **Model** - LLaVA 1.5, with lesser models like TinyLLaVA used for efficiency analysis.
+* **Datasets** - LLaVA-1.5, M3IT, MiniGPT4, MANTIS, LAMM, VisionFLAN for the main experiments, and MMLU for evaluation.
+* **Baselines** - Multi-task training, Sequential training, Random Experience Replay, Score-based methods (e.g., Perplexity, EL2N), SemDeDup, Density-based Pruning, COINCIDE.
 
 ## Formulas
 
-Below is a detailed breakdown of each variable and component in the formulas using MathJax-style LaTeX formatting.
-
----
-
 ### 1. Perplexity of a Multimodal Data Instance
 
-The formula given is:
+The formula is given by:
 
 $$
 \text{PPL}(z_i) = \exp\left(\frac{1}{|z_i|} \sum_{e_j \in z_i} \text{NLL}(e_j)\right),
 $$
 
-with:
+where:
 
 $$
-\text{NLL}(e_j) = -\log( P(e_j|e_{<j}, I;\theta))
+\text{NLL}(e_j) = -\log\bigl(P(e_j \mid e_{<j}, I; \theta)\bigr).
 $$
 
-**Breakdown**:
+**Explanation of the variables:**
 
-- $z_i$: Denotes a multimodal data instance, which is usually a sequence of tokens that may include both image-related tokens and text tokens.
-- $|z_i|$: Represents the length (i.e., the total number of tokens or elements) in instance $z_i$. It acts as a normalization factor for the sum of negative log-likelihoods.
-- $e_j \in z_i$: Here, $e_j$ is the $j$th element (or token) in the data instance $z_i$. The notation $e_j \in z_i$ indicates consideration of every token in the sequence.
-- $\text{NLL}(e_j)$: Stands for the negative log-likelihood of token $e_j$. It quantifies the “cost” or “surprise” of seeing the token $e_j$ given the context.
-- $P(e_j|e_{<j}, I; \theta)$: The probability of generating token $e_j$ conditioned on previous tokens, image tokens, and model parameters.
-- $\exp(\cdot)$: The exponential function converts the average negative log-likelihood back to a perplexity score, expressing model confidence.
-
----
+- $ z_i $: A multimodal data instance.
+- $ |z_i| $: Length of the data instance $z_i$.
+- $ e_j $: The $j$-th element in sequence $z_i$.
+- $ e_{<j} $: Sequence of elements preceding $e_j$ in $z_i$.
+- $ I $: Image component associated with the multimodal instance.
+- $ \theta $: Model parameters.
+- $ P(e_j \mid e_{<j}, I; \theta) $: Probability assigned by the model to the element $e_j$ given previous elements and image $I$.
+- $ \text{NLL}(e_j) $: Negative Log-Likelihood for element $e_j$.
 
 ### 2. Image Grounding Score
 
@@ -51,108 +47,104 @@ $$
 \text{IG}(z_i) = \frac{\text{PPL}(e)}{\text{PPL}(e, I)}.
 $$
 
-**Breakdown**:
+**Explanation of the variables:**
 
-- $\text{IG}(z_i)$: Image grounding score for multimodal data instance $z_i$. Measures the influence of image $I$ for explaining the text.
-- $\text{PPL}(e)$: Perplexity of generating text tokens $e$ without conditioning on the image.
-- $\text{PPL}(e, I)$: Perplexity of generating text tokens when conditioned on image $I$ as well.
+- $\text{PPL}(e)$: Perplexity of the token sequence $e$ without image context.
+- $\text{PPL}(e, I)$: Perplexity of sequence $e$ with image $I$ context.
+- $ \text{IG}(z_i) $: Image grounding score for instance $z_i$.
 
-The ratio compares the two perplexities to assess the importance of visual context.
+### 3. Training Objective at Time Step $T$
 
----
-
-### 3. Lifelong Multimodal Instruction Tuning Objective
-
-The optimization problem is formulated as:
+The training objective is formulated as:
 
 $$
-\arg\min_\theta \frac{1}{T + 1} \sum_{t=0}^T \sum_{i=0}^{\hat{N}_t - 1} L\!\Big(f\big(\hat{x}_i^t, \hat{p}_i^t; \theta\big),\, \hat{y}_i^t\Big),
+\arg \min_{\theta} \frac{1}{T + 1} \sum_{t=0}^{T} \sum_{i=0}^{\hat{N}_t - 1} L\Big( f (\hat{x}_i^t, \hat{p}_i^t; \theta), \hat{y}_i^t \Big),
 $$
 
-subject to:
+subject to the constraint:
 
 $$
 T \cdot (\hat{N}_t - 1) \leq \tau.
 $$
 
-**Breakdown**:
+**Explanation of the variables:**
 
-- $\theta$: Model parameters being optimized.
-- $T$: Total number of observed tasks or datasets over time.
-- $\hat{N}_t$: Number of data instances in the $t$th task.
-- $\hat{x}_i^t$ and $\hat{p}_i^t$: Input data components for task $t$.
-- $f(\hat{x}_i^t, \hat{p}_i^t; \theta)$: Model’s output for given input and parameters.
-- $\hat{y}_i^t$: Target output for input at index $i$ for task $t$.
-- $L(\cdot, \cdot)$: Loss function measuring the distance between the model’s output and the true label.
-- $\tau$: Predefined computational budget constraint.
+- $ T $: Current time step.
+- $ \theta $: Model parameters.
+- $ \hat{N}_t $: Selected samples at time step $ t $.
+- $ N_t $: Total samples at time step $ t $.
+- $ L(\cdot,\cdot) $: Loss function.
+- $ f(\hat{x}_i^t, \hat{p}_i^t; \theta) $: Model prediction function.
+- $ \hat{y}_i^t $: Ground truth label.
+- $ \tau $: Computational budget constraint.
 
----
+### 4. Selection of $\hat{s}$
 
-### 4. Entropy-based Multi-Way Data Selection Within Clusters
-
-The formula is:
+The selection mechanism is given by:
 
 $$
-\hat{s}^{(k)} = \arg\max_{s^n} H\Big(\hat{P}_n^{\theta}\Big), \quad \text{where} \quad \hat{P}_n^{\theta} = \{\hat{p}_b(s^n)\}, \ \forall b \in B^{(k)}.
+\hat{s}^{(k)} = \arg \max_{s_n} H \Big( \hat{P}_n^{\theta} \Big),
 $$
 
-**Breakdown**:
+where:
 
-- $\hat{s}^{(k)}$: Selected scoring function for the $k$th cluster, maximizing entropy.
-- $s^n$: Candidate scoring function for data samples.
-- $\arg\max_{s^n}$: Notation for finding the $s^n$ that maximizes the function.
-- $H(\hat{P}_n^{\theta})$: Entropy of distribution $\hat{P}_n^{\theta}$, measuring uncertainty.
-- $\hat{P}_n^{\theta}$: Set of scores as computed under parameters $\theta$.
-- $B^{(k)}$: Collection of branches or sub-clusters within the $k$th main cluster.
+$$
+\hat{P}_n^{\theta} = \big\{ \hat{p}_b^{(n)}(x) \big\}, \quad \forall\, b \in B^{(k)} \text{ and } x \in C_k.
+$$
 
----
+**Explanation of the variables:**
+
+- $\hat{s}^{(k)}$: Selected sample/score for group $k$.
+- $ H(\hat{P}_n^{\theta}) $: Entropy measure over probabilities $\hat{P}_n^{\theta}$.
+- $\hat{P}_n^{\theta}$: Set of probabilities for sample index $n$.
+- $\hat{p}_b^{(n)}(x)$: Probability for class/label $b$.
+- $ B^{(k)} $: Set representing a specific block/subset.
+- $ C_k $: Set of inputs/contexts for group $k$.
 
 ## Training Flow
 
-### Training Flow
-
 1. Begin with a pre-trained Multimodal Large Language Model (MLLM).
-2. Integrate new datasets into the training pool.
-3. Extract gradient vectors for each sample.
-4. Form pseudo-task clusters using k-means on gradient vectors.
-5. Evaluate sample importance using a pool of scoring function experts.
-6. Train the model on selected samples while maintaining a computational budget.
-7. Prune semantically redundant samples from larger clusters.
-8. Iterate the process with new datasets.
+2. Integrate new datasets into the training pool with previous datasets.
+3. Extract gradient vectors for each dataset pool sample.
+4. Perform pseudo-task clustering using k-means on gradient vectors.
+5. For each pseudo-task cluster:
+   - Evaluate sample importance with scoring experts.
+   - Select important samples using the chosen scoring function.
+6. Train the model on selected samples, respecting computational budget.
+7. Measure semantic similarities and prune redundant samples.
 
 ## Inference Flow
 
-### Inference Flow
+1. **Initial Setup**: Start with a pre-trained MLLM and initial dataset pool.
+2. **Task of Lifelong Instruction Tuning (LiIT)**: Include new datasets periodically.
+3. **Adaptive Data Selection**: Combine new datasets with existing pool.
+4. **Scoring Sample Importance**: Compute importance scores for data samples.
+5. **Data Pruning and Training**: Select important samples and train.
+6. **Reduce Data Pool Size**: Prune semantically redundant samples.
+7. **Dynamic Data Pruning (LITE-Adapt-∞)**: Use adaptive pruning to balance efficiency and training requirements.
 
-1. **Initial Setup**: Begin with a pre-trained MLLM and initial dataset. Define computational budget.
-2. **Task of Lifelong Instruction Tuning (LiIT)**: Train and prune datasets periodically.
-3. **Adaptive Data Selection**: Combine new datasets with the existing pool and form clusters.
-4. **Scoring Sample Importance**: Compute diverse importance scores and dynamically select scoring functions.
-5. **Data Pruning and Training**: Select important samples, distribute training budget, and prune semantic duplicates.
-6. **Dynamic Data Pruning (LITE-Adapt-∞)**: Implement adaptive, multi-way pruning for efficient training.
+### Inference Flow Code
 
 ```python
 import torch
 from torch.utils.data import DataLoader
 
-# Step 1: Define constants and initialize necessary variables
+# Assume model, datasets, and feature_extractor are predefined
+
 NUM_CLUSTERS = 10
 TRAINING_BUDGET = 25000
 COMPUTATIONAL_BUDGET = ...
 pruned_data_pool = []
 
-# Step 2: Update and integrate new datasets
 def integrate_new_data(new_data, data_pool):
     data_pool.extend(new_data)
     return data_pool
 
-# Step 3: Create pseudo-task clusters
 def create_clusters(data_pool):
     gradients = extract_gradients(data_pool)
     clusters = kmeans_clustering(gradients, NUM_CLUSTERS)
     return clusters
 
-# Step 4: Score samples and select data
 def score_and_select(data_pool, clusters):
     selected_data = []
     for cluster in clusters:
@@ -161,27 +153,19 @@ def score_and_select(data_pool, clusters):
         selected_data.extend(top_samples)
     return selected_data
 
-# Step 5: Train the model on selected data
 def train_model(model, selected_data):
     train_loader = DataLoader(selected_data, batch_size=...)
     for batch in train_loader:
-        # Forward pass
         output = model(batch)
-        # Compute loss and backward pass
         loss = compute_loss(output, batch.labels)
         loss.backward()
-        # Optimization step
         optimizer.step()
 
-# Step 6: Manage data pool size with pruning
 def prune_data_pool(data_pool):
-    # Compute semantic representations
     representations = feature_extractor(data_pool)
-    # Prune redundant samples
     pruned_pool = prune_redundant_samples(representations, data_pool)
     return pruned_pool
 
-# Example execution flow
 new_data = load_new_dataset(timestep)
 data_pool = integrate_new_data(new_data, data_pool)
 clusters = create_clusters(data_pool)
@@ -190,8 +174,6 @@ train_model(model, selected_data)
 pruned_data_pool = prune_data_pool(data_pool)
 ```
 
-This pseudocode captures the essence of dynamically selecting and pruning data to efficiently train a lifelong adaptive multimodal model.
-
 ## Experiments
 
 ### List of Experiments
@@ -199,16 +181,14 @@ This pseudocode captures the essence of dynamically selecting and pruning data t
 * Annotation budget ablations (Table 5)
 * Time cost comparison (Table 6)
 * Pseudo-task clustering vs hidden state outputs analysis (Section 4.2, Figure 4)
-* Ablation results for different pruning types (Table 3)
-* Efficiency analysis with different configurations using LITE-Adapt-∞ (Section 6)
-* Skill-wise breakdown of relative gains (Figure 5A)
-* Visual chat skill retention example (Figures 6, 7, and 8)
+* Ablation results (Table 3)
+* Efficiency analysis (Section 6)
+* Skill-wise breakdown (Figure 5A)
+* Visual chat skill retention (Figures 6, 7, 8)
 * Sequential vs multitask training performance (Table 2)
-* Multilingual skill recovery analysis (Section 6, Figure 9)
-* Lifelong instruction tuning for language-only models (Table 8)
+* Recovery analysis for multilingual skill (Section 6, Figure 9)
+* Experiments on lifelong instruction tuning for language-only models (Table 8)
 
 ## Proofs
 
-### List of Proofs
-
-The paper primarily focuses on empirical methodologies, results, and analysis for the Adapt-∞ framework, without presenting formal mathematical proofs. It emphasizes methodologies such as the Adapt-∞ data selection method and experimental setups rather than traditional proofs.
+The paper primarily details empirical and experimental methodologies, results, and analysis for the Adapt-∞ framework. It does not provide formal mathematical proofs but focuses on the methodologies and results of implementing Adapt-∞ in lifelong multimodal instruction tuning.
