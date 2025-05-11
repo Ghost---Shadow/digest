@@ -1,10 +1,11 @@
-# Finding Support Examples for In-Context Learning
+# Leveraging Exemplars for Novel Support (LENS)
 
 ## Meta
+
 * **Name**: Finding Support Examples for In-Context Learning
 * **Journal**: Not specified
 * **Year**: Not specified
-* **Author**: School of Computer Science, Fudan University; Shanghai Key Laboratory of Intelligent Information Processing, Fudan University
+* **Authors**: School of Computer Science, Fudan University; Shanghai Key Laboratory of Intelligent Information Processing, Fudan University
 * **Code**: [GitHub link](https://github.com/LeeSureman/ICL_Support_Example)
 * **One-liner**: The paper proposes the LENS method to find "support examples" for in-context learning that improve performance by selecting informative and representative examples from a dataset.
 * **Model**: GPT-2 (specifically GPT2-L)
@@ -13,7 +14,9 @@
 
 ## Formulas
 
-### 1. In-Context Prediction Formula
+These are the formulas used in the LENS method, with detailed explanations of each variable and component.
+
+1. **In-context Prediction Formula**
 
 The prediction for a test input is computed as:
 
@@ -23,78 +26,69 @@ $$
 
 where:
 
-- $G$: Represents the language model (LM) used for in-context learning.
-- $\{x_i, y_i\}_{i=1}^{n}$: A set of $n$ in-context examples, consisting of input $x_i$ and label/output $y_i$.
-- $x_{test}$: The test input for which we want to generate a prediction.
-- $Y$: The label (or output) space over which the prediction is made.
-- $\oplus$: Represents the concatenation operation.
-- $p_{G}(y \mid \cdot)$: The probability estimated by the language model $G$ for generating output $y$ given the concatenated prompt.
-- $\arg\max_{y \in Y}$: Indicates that the overall prediction is the label $y$ that maximizes the conditional probability.
+- $$G$$ represents the language model used for in-context learning.
+- $$\{x_i, y_i\}_{i=1}^{n}$$ is the set of $$n$$ in-context examples, each consisting of an input $$x_i$$ and its corresponding label or output $$y_i$$.
+- $$x_{test}$$ is the test input for which we want to generate a prediction.
+- $$Y$$ denotes the label space over which the prediction is made.
+- $$\oplus$$ represents the concatenation operation.
+- $$p_{G}(y \mid \cdot)$$ is the probability estimated by the language model for generating output $$y$$ given the concatenated prompt.
+- $$\arg\max_{y \in Y}$$ means that the overall prediction is the label $$y$$ that maximizes the conditional probability.
 
-### 2. InfoScore Formula
+2. **InfoScore Formula**
 
-The InfoScore quantifies the individual in-context informativeness:
+The InfoScore quantifies the individual in-context informativeness of a single example $$e = \{x, y\}$$ using feedback from the language model:
 
 $$
 I(e, D) = \sum_{e' \in D} c(e, e'),
 $$
 
-where
+where:
 
-$$
-c(e, e') = p_{G}(y' \mid x, y, x') - p_{G}(y' \mid x'),
-$$
+- $$e = \{x, y\}$$ is the example, composed of input $$x$$ and label $$y$$.
+- $$D$$ is the training dataset over which the informativeness score is aggregated.
+- $$e' = \{x', y'\}$$ is an element of the training dataset.
+- $$c(e, e') = p_{G}(y' \mid x, y, x') - p_{G}(y' \mid x')$$ measures the contribution gap of $$e$$ when predicting $$y'$$.
+- $$I(e, D)$$ reflects the overall informativeness of the example $$e$$ across the training set.
 
-and:
+3. **Diversity-Guided Example Update Formula**
 
-- $e = \{x, y\}$: An example composed of input $x$ and label $y$.
-- $D$: The training dataset over which the informativeness score is aggregated.
-- $e' = \{x', y'\}$: An element of the training dataset.
-- $p_{G}(y' \mid x, y, x')$: Probability assigned by the language model $G$ to $y'$ with additional context $e$.
-- $p_{G}(y' \mid x')$: Probability assigned by the language model to $y'$ when conditioned only on $x'$.
-- $c(e, e')$: The gap measuring additional context $e$ contribution.
-- $I(e, D)$: Aggregated informativeness across the training set.
-
-### 3. Diversity-Guided Example Update Formula
-
-This formula updates a chosen example by considering informativeness and diversity:
+This formula updates a chosen example by considering its informativeness and diversity relative to other examples:
 
 $$
 e^*_{new} = \arg\max_{e \in D'} s(e, E' - e^*),
 $$
 
-where:
+with the scoring function:
 
 $$
 s(e, E') = I(e, S) - \lambda \sum_{e' \in E'} \text{sim}\bigl(f(e), f(e')\bigr).
 $$
 
-The components include:
+Details of the components:
 
-- $e^*$: The previously chosen example.
-- $e^*_{new}$: The updated example.
-- $D'$: A subset of the training dataset.
-- $E' = E - e^*$: A set of examples with $e^*$ removed.
-- $s(e, E')$: A composite score reflecting both informativeness and diversity.
-- $\lambda$: A hyperparameter controlling the trade-off between informativeness and diversity.
-- $\text{sim}\bigl(f(e), f(e')\bigr)$: A similarity measure between feature vectors.
-- $f(e)$: Feature vector of example $e$, considering its informativeness with respect to the score set $S$.
+- $$e^*$$ is the previously chosen example being updated.
+- $$e^*_{new}$$ is the updated example from subset $$D'$$.
+- $$f(e) = \Bigl[c(e, e^s_1),\; c(e, e^s_2),\; \ldots,\; c(e, e^s_{|S|})\Bigr]$$ is the feature vector of the example $$e$$.
+
+**Summary**:
+- The first formula selects the output $$y$$ for the test input that maximizes the likelihood using in-context examples.
+- The InfoScore formula measures how much a given example improves prediction probabilities over a dataset.
+- The Diversity-Guided Example Update Formula combines informativeness and diversity to select the best candidate.
 
 ## Training Flow
 
-### Training Flow
+### Training Steps
 
-1. **Select Dataset and Define Task**: Start with a dataset $D$ for in-context learning to select support examples.
+1. **Select Dataset and Define Task**: Select a dataset for in-context learning, involving the selection of "support examples."
 2. **Filter-Then-Search Method (LENS)**:
-   - **Stage 1: Informative Examples Filtering**
-     - Compute InfoScore $I(e, D)$ for each example to evaluate informativeness.
-     - Use progressive filtering (Algorithm 1) to reduce $D$ to a smaller subset $D^\prime$.
-   - **Stage 2: Diversity-Guided Example Search**
+   - **Stage 1: Informative Examples Filtering**: 
+     - Compute InfoScore for each example.
+     - Use progressive filtering to reduce uninformative examples.
+   - **Stage 2: Diversity-Guided Example Search**: 
      - Initialize permutations of selected examples.
-     - Iteratively update via diversity-guided search (Algorithm 2).
-     - Select permutations with superior task performance.
+     - Update by diversity-guided search and evaluate permutations.
 
-### Sample Pseudocode
+#### Sample Pseudocode
 
 ```python
 # Initialize dataset and language model
@@ -121,115 +115,63 @@ for iteration in range(max_iterations):
 support_examples = select_top_permutations(candidate_permutations)
 ```
 
-The method highlights filtering for informativeness and diversity-search for representative examples.
+The method emphasizes filtering for informativeness and searching for diversity to represent the task thoroughly.
 
 ## Inference Flow
 
-### Inference Flow
+### Inference Steps
 
-1. Define the task and setup the language model $G$.
-2. Concatenate $n$ examples with the task input.
-3. Compute prediction using:
+1. Define the task and setup the language model.
+2. Construct input by concatenating examples with the task input.
+3. Compute prediction using the language model.
+4. Measure informativeness using InfoScore.
+5. Implement filtering to reduce computational cost.
+6. Initialize and refine diverse example permutations.
 
-$$
-\arg \max_{y \in Y} p_G(y|x_1 \oplus y_1 \cdots x_n \oplus y_n \oplus x_{\text{test}})
-$$
-
-4. Measure informativeness with InfoScore.
-5. Implement progressive filtering to lessen computational costs.
-6. Initialize diverse example permutations and refine them.
-7. Update permutations for diversity and informativeness.
-8. Evaluate permutations on a validation set.
-9. Output the final set of support examples.
-
-### Inference Flow Code
+#### Inference Pseudocode
 
 ```python
 def in_context_inference(language_model, dataset, task_input):
-    # Step 1: Concatenate examples and task input
+    # Concatenate examples and task input
     input_sequence = concatenate_examples_and_input(dataset, task_input)
-
-    # Step 2: Compute model output
+    # Compute model output
     prediction = language_model.predict(input_sequence)
-
     return prediction
 
-def progressive_filtering(dataset, initial_set_size, progressive_factor, m_size):
-    current_dataset = dataset
-    score_set = random_sample(initial_set_size)
-
-    while len(current_dataset) > m_size:
-        # Compute InfoScore for current dataset
-        info_scores = [compute_info_score(e, score_set) for e in current_dataset]
-        
-        # Filter dataset
-        if len(current_dataset) / progressive_factor < m_size:
-            break
-        else:
-            top_candidates = select_top_candidates(current_dataset, info_scores, ratio=1/progressive_factor)
-            current_dataset = top_candidates
-            new_samples = random_sample(len(score_set) * (progressive_factor - 1))
-            score_set.extend(new_samples)
-
-    return current_dataset
-
-def diversity_guided_search(candidate_set, val_set, diversity_weight, beam_size, iterations):
-    beam = initialize_diverse_permutations(candidate_set, beam_size)
-
-    for _ in range(iterations):
-        new_beam = []
-        for candidate in beam:
-            for _ in range(beam_size):
-                updated = update_candidate(candidate, candidate_set, diversity_weight)
-                new_beam.append(updated)
-
-        best_candidates = evaluate_beam(new_beam, val_set)
-        beam = best_candidates[:beam_size]
-
-    return select_best_permutation(beam)
-
-# Main Function
 def main():
     # Initialize language model
     language_model = LanguageModel()
-
     # Load dataset and task input
     dataset, task_input = load_data()
-
-    # Step 1: Filter Informative Examples
+    # Filter Informative Examples
     candidates = progressive_filtering(dataset, initial_set_size=10, progressive_factor=2, m_size=500)
-
-    # Step 2: Diversity-guided search
+    # Diversity-guided search
     best_permutation = diversity_guided_search(candidates, validation_set, diversity_weight=1, beam_size=8, iterations=10)
-    
     # Make prediction using best permutation
     prediction = in_context_inference(language_model, best_permutation, task_input)
-
     print(f"Prediction: {prediction}")
 
 if __name__ == "__main__":
     main()
 ```
 
-The pseudocode outlines the inference flow for selecting support examples in in-context learning, focusing on filtering and diversity-guided searching.
-
 ## Experiments
 
-### Experiments
+### List of Experiments
 
 * Impact of progressive filtering and candidate selection (Table 5)
-* Main performance comparison across datasets (Table 2)
-* Order sensitivity of support vs. random examples (Figure 2)
-* Transferability across different models (Table 3)
-* Influence of labels on performance in ICL (Figure 3)
+* Main performance comparison across various datasets (Table 2)
+* Order sensitivity of support examples vs. random examples (Figure 2)
+* Transferability of support examples across language models (Table 3)
+* Influence of ground truth labels on performance in ICL (Figure 3)
 * Impact of hyper-parameters (Table 4)
 
 ## Proofs
 
-### Proofs
+### Explanation
 
-The paper primarily offers empirical justifications over formal mathematical proofs.
+The paper relies on empirical results rather than traditional proofs. The methodology is justified through experiments and empirical evidence, focusing on the algorithmic complexity.
 
-- **The Complexity of Our Method**: The progressive filtering stage complexity is $O(N \cdot \log_\rho N)$, where $N$ is the training set size.
+- **The Complexity of Our Method**: The progressive filtering stage complexity is $O(N \cdot \log_\rho N)$, where $N$ is the training set size. Further details on complexity are discussed under "The Complexity of Our Method."
 
-The approach focuses on algorithmic explanations with experimental validation rather than traditional mathematical proofs.
+The paper emphasizes empirical validation over mathematical proofs, providing algorithmic explanations and focusing on experimental results compared to baselines.

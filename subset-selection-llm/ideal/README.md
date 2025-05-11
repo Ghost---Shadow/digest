@@ -2,108 +2,112 @@
 
 ## Meta
 
-- **Name**: IDEAL: Influence-Driven Selective Annotations Empower In-Context Learners in Large Language Models
-- **Journal**: ICLR (International Conference on Learning Representations)
-- **Year**: 2024
-- **Authors**: Pennsylvania State University, The University of Sydney, Tsinghua University, Xidian University
-- **Code**: [IDEAL on GitHub](https://skzhang1.github.io/IDEAL/)
-- **One-liner**: An influence-driven selective annotation method to reduce annotation costs while improving the selection of prompts for large language models.
-- **Model**: GPT-J 6B, GPT-Neo 2.7B, Text-davinci-002, GPT-3.5-Turbo
-- **Datasets**: MRPC, SST-5, MNLI, DBpedia, RTE, HellaSwag, MWoZ, GeoQuery, Xsum
-- **Baselines**: Random selection, Vote-k, K-Means, Maximizing facility location (MFL), Fast Vote-k
+- **Journal:** ICLR (International Conference on Learning Representations)
+- **Year:** 2024
+- **Authors:** Pennsylvania State University, The University of Sydney, Tsinghua University, Xidian University
+- **Code:** [IDEAL GitHub](https://skzhang1.github.io/IDEAL/)
+- **One-liner:** An influence-driven selective annotation method to decrease annotation costs while enhancing prompt selection for large language models.
+- **Models:** GPT-J 6B, GPT-Neo 2.7B, Text-davinci-002, GPT-3.5-Turbo
+- **Datasets:** MRPC, SST-5, MNLI, DBpedia, RTE, HellaSwag, MWoZ, GeoQuery, Xsum
+- **Baselines:** Random selection, Vote-k, K-Means, Maximizing facility location (MFL), Fast Vote-k
 
 ## Formulas
 
-This section provides a breakdown of the key formulas and variables used in the paper, expressed using MathJax-style LaTeX.
-
 ### 1. Graph Representation and Influence Function
 
-The paper considers a graph:
+The paper introduces a graph structure represented as:
 
 $$
 G = (V, E, P)
 $$
 
-- $ V $: The set of vertices representing candidates or retrieval set elements.
-- $ E $: The set of edges representing relationships or similarities.
-- $ P $: Probabilities associated with edges reflecting cosine similarity between embeddings.
+Where:
+- $V$: The set of vertices, each representing a candidate data example or a retrieval set element.
+- $E$: The set of edges denoting relationships or similarities between vertices.
+- $P$: Probabilities associated with edges, reflective of \emph{cosine similarity} between embeddings, influencing the likelihood of information being passed during diffusion.
 
-The influence of a subset $ S \subseteq V $ is measured by $ f_G(S) $, quantifying the number of vertices activated when diffusion starts from $ S $ and spreads over $ G $.
+The influence of a subset $S \subseteq V$ is captured by $f_G(S)$, which measures the number of vertices activated when diffusion originates from $S$ across graph $G$.
 
 ### 2. Subset Influence Function and Influence Improvement
 
-The influence improvement by adding a vertex $ v $ to a subset $ S $:
+Influence improvement by adding a vertex $v$ to subset $S$ is defined as:
 
 $$
-\psi_v(S) = f_G(S \cup \{v\}) - f_G(S).
+\psi_v(S) = f_G(S \cup \{v\}) - f_G(S)
 $$
 
-- $ \psi_v(S) $: Incremental gain in influence when $ v $ is added to $ S $.
-- Measures additional activation on the graph by adding $ v $.
+Where:
+- $\psi_v(S)$: Incremental influence gain from adding $v$ to $S$.
+- $f_G(S \cup \{v\})$: Influence after including vertex $v$.
+- $f_G(S)$: Influence before adding $v$.
 
 ### 3. Submodular Condition
 
-The influence function $ f_G(S) $ satisfies submodularity:
+The influence function $f_G(S)$ exhibits submodularity:
 
 $$
-f_G(S_a \cup \{v\}) - f_G(S_a) \geq f_G(S_b \cup \{v\}) - f_G(S_b),
+f_G(S_a \cup \{v\}) - f_G(S_a) \geq f_G(S_b \cup \{v\}) - f_G(S_b)
 $$
 
-for $ S_a \subset S_b $ and $ v \in V \setminus S_b $.
+Where:
+- $S_a \subset S_b$.
+- $v \in V \setminus S_b$.
+
+This inequality demonstrates the \emph{diminishing returns property} that justifies greedy subset selection strategies.
 
 ### 4. Marginal Gain Greedy Selection
 
-To select a subset that maximizes influence:
+To optimize influence selection under budget $m$:
 
 $$
-\max_{v \in V \setminus S_t} f_G(S_t \cup \{v\}),
-$$
+\max_{v \in V \setminus S_t} f_G(S_t \cup \{v\})
+$$ 
 
-- At each iteration $ t $, choose $ v_t $ providing maximum marginal gain.
+Where:
+- $S_t$: Current subset after $t$ iterations.
+- $V \setminus S_t$: Remaining candidates.
+
+The vertex $v_t$ maximizing the marginal gain is selected at each step.
 
 ### 5. Approximation and Lower Bound Guarantees
 
-- **Proposition 1 (Upper Bound)**:
+#### a. Proposition 1 (Upper Bound):
 
-  $$
-  f_G(S^*_m) \leq f_G(S_t) + m\, \psi_{t+1}
-  $$
+$$
+f_G(S^*_m) \leq f_G(S_t) + m\, \psi_{t+1}
+$$
 
-- **Theorem 1 (Lower Bound)**:
+Where:
+- $S^*_m$: Optimal $m$-vertex subset.
+- $\psi_{t+1}$: Maximum upcoming marginal improvement.
 
-  $$
-  f_G(S_m) \geq \left(1 - \left(1 - \frac{1}{m}\right)^m\right) f_G(S^*_m)
-  $$
+#### b. Theorem 1 (Lower Bound):
 
-### Summary
+$$
+f_G(S_m) \geq \left(1 - \left(1 - \frac{1}{m}\right)^m\right) f_G(S^*_m)
+$$
 
-- Defines a graph-based structure with vertices (data points) and probabilistic edges (cosine similarity).
-- Uses an influence function to quantify activation starting from a subset $ S $.
-- Incorporates submodularity for greedy subset selection.
-- Provides approximation bounds ensuring near-optimal performance.
+Ensuring the greedy algorithm's influence is at least $(1 - (1 - \frac{1}{m})^m)$ times the optimal influence, converging to $1 - e^{-1}$ as $m$ grows.
 
 ## Training Flow
 
-### Key Steps
+### Steps
 
-1. **Directed Graph Construction**: Embed each instance using Sentence-BERT and construct a graph based on cosine similarity.
+1. **Directed Graph Construction:** Embed data using Sentence-BERT to create a directed graph $G$, connecting embeddings by cosine similarity.
+2. **Influence Quantification:** Simulate diffusion to measure influence by counting activated vertices from subset $S$.
+3. **Subset Search with Maximum Influence:** Utilize a greedy algorithm to select a maximally influential subset $S_u$ within budget $m$.
+4. **Annotation and Prompt Retrieval:** Annotate $S_u$ and use embeddings for similarity-based prompt retrieval.
+5. **Theoretical Validation:** Establish a lower bound for subset influence by the method.
+6. **Efficiency Considerations:** Balance graph construction parameters and optimize for computational efficiency.
 
-2. **Influence Quantification**: Simulate diffusion in graph $ G $ starting from a candidate subset $ S $.
-
-3. **Subset Search with Maximum Influence**: Use a greedy algorithm to find a subset with maximum influence within budget $ m $.
-
-4. **Annotation and Prompt Retrieval**: Manual annotation of $ S_u $ and retrieve prompts based on similarity.
-
-5. **Theoretical Validation**: Validate lower bound for influence approximation.
-
-6. **Efficiency Considerations**: Optimize graph density and minimize processing complexity.
-
-### Pseudocode
+### Training Flow Code
 
 ```python
 import torch
 from sentence_transformers import SentenceTransformer
+from torch_geometric.data import Data
 import random
+import numpy as np
 
 model = SentenceTransformer('all-mpnet-base-v2')
 
@@ -116,14 +120,14 @@ def construct_graph(data, k=10):
         for j in knn_indices:
             if i != j:
                 edges.append((i, j, cosine_sim[i][j]))
-    return edges
+    return Data(edges=torch.tensor(edges), x=embeddings)
 
 def influence_quantification(graph, subset):
     influenced = set(subset)
     to_explore = list(subset)
     while to_explore:
         current = to_explore.pop()
-        for neighbor in graph[current]:
+        for neighbor in graph.edges[current]:
             if neighbor not in influenced and random.random() < graph.edge_weights[(current, neighbor)]:
                 influenced.add(neighbor)
                 to_explore.append(neighbor)
@@ -139,18 +143,22 @@ def greedy_search(graph, budget):
                 best_candidate, best_influence = node, candidate_influence
         selected.add(best_candidate)
     return selected
+
+data = ["sample text1", "sample text2", "..."]
+graph = construct_graph(data)
+selected_subset = greedy_search(graph, budget=10)
 ```
 
 ## Inference Flow
 
-### Key Steps
+### Steps
 
-1. Construct graph with vertices as embeddings and edges based on cosine similarity.
-2. Quantify influence through candidate subset diffusion.
-3. Use a greedy algorithm for maximum marginal influence gain.
-4. Retrieve similar annotations for test inputs based on embeddings.
+1. **Graph Construction:** Create a directed graph from embeddings, connecting vertices by cosine similarity.
+2. **Influence Quantification:** Initiate and simulate a diffusion process to measure subset influence.
+3. **Greedy Selection for Maximum Influence:** Incrementally select vertices that maximize influence within the budget.
+4. **Prompt Retrieval:** Fetch similar annotated entries for test inputs using cosine similarity.
 
-### Pseudocode
+### Inference Flow Code
 
 ```python
 import torch
@@ -218,28 +226,28 @@ class IDEALInference:
 ### List of Experiments
 
 - Annotation budget ablations (Table 1)
-- Time cost comparison between IDEAL and Vote-k (Figure 3)
-- Candidate subset influence vs performance on in-context learning correlation (Figure 4)
-- Visualization using UMAP (Figure 6)
-- Performance with varying prompt orders (Table 10)
+- Time cost comparison between IDEAL and Vote-k during subset selection (Figure 3)
+- Correlation between candidate subset influence vs. performance on in-context learning (Figure 4)
+- Visualization of selected examples using UMAP (Figure 6)
+- Performance under varying prompt order (Table 10)
 - Comparison with other coreset selection methods (Table 2)
 - Evaluation with different retrieval methods (Table 3)
 - Evaluation with different language models (Figure 5)
 - Evaluation on out-of-distribution tasks (Table 4)
 - Automatic annotation scenario (Table 5)
-- Min max mean results across seeds (Tables 7 and 8)
+- Min, max, mean results across seeds (Table 7 and Table 8)
 
 ## Proofs
 
 ### List of Proofs
 
 1. **Submodularity of Influence Function**
-   - The influence function $ f_G $ satisfies the submodular condition, ensuring diminishing returns when adding data points to smaller subsets.
+   - Demonstrates that influence function $f_G$ meets the submodular condition, ensuring maximum influence gain by augmenting smaller subsets before larger ones.
 
 2. **Lower Bound Termination Guarantee**
-   - The subset $ S_m $ selected by the greedy algorithm achieves at least a fraction of the optimal solution's influence.
+   - Shows that the greedy-selected subset $S_m$ reaches at least $(1 - (1 - 1/m)^m)$ of optimal influence $f_G(S^*_m)$, with performance nearing $1 - 1/e$ as annotation budget $m$ increases.
 
 3. **Time Complexity Analysis**
-   - The selection process is bounded by $ O(m \cdot (a + b)) $ where $ a $ is nodes and $ b $ is edges in graph $ G $. 
+   - Analyzes the overall time complexity for data selection, detailing diffusion processes and greedy selection scope based on graph dimensions $a$ nodes and $b$ edges, amounting to $O(m \cdot (a + b))$.
 
-Refer to the full mathematical derivations in the paper for detailed proofs.
+For detailed mathematical proofs, refer to relevant sections in the paper.
