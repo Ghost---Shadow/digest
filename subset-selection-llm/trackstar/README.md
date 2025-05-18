@@ -20,9 +20,7 @@ Below is a breakdown of each formula and the variables used in the TrackStar gra
 
 The influence from a training example $z_m$ to an evaluation (query) example $z_q$ is computed as:
 
-$$
-I_\theta(z_m, z_q) = \bar{G}_\theta(z_m) \cdot \bar{G}_\theta(z_q)
-$$
+$$I_\theta(z_m, z_q) = \bar{G}_\theta(z_m) \cdot \bar{G}_\theta(z_q)$$
 
 where:
 
@@ -34,12 +32,9 @@ where:
 
 The method first computes an intermediate gradient, then corrects and projects it. The equations are as follows:
 
-$$
-\bar{G}_\theta(z) = \frac{G_\theta(z)}{||G_\theta(z)||_2}
-$$
-$$
-G_\theta(z) = R^{-1/2} \, Pd \, \frac{\nabla_\theta \text{Loss}(z, \theta)}{\sqrt{V}}
-$$
+$$\bar{G}_\theta(z) = \frac{G_\theta(z)}{||G_\theta(z)||_2}$$
+
+$$G_\theta(z) = R^{-1/2} \, Pd \, \frac{\nabla_\theta \text{Loss}(z, \theta)}{\sqrt{V}}$$
 
 Here:
 
@@ -58,40 +53,25 @@ Additional details about some of the operations and variables:
 
 - **Loss Gradient**:
   
-  $$
-  \nabla_\theta \text{Loss}(z, \theta)
-  $$
-  
+$$\nabla_\theta \text{Loss}(z, \theta)$$
   This is the standard gradient of the loss function for an example $z$ with respect to the model parameters $\theta$.
 
 - **Second Moment Estimate**:
   
-  $$
-  V \in \mathbb{R}^{|\theta|}
-  $$
-  
+$$V \in \mathbb{R}^{|\theta|}$$
   Here, $V$ represents an element-wise moving average of the squared gradients. It helps in mitigating issues with gradient components that have high variance.
 
 - **Random Projection Matrix**:
   
-  $$
-  Pd \in \mathbb{R}^{d \times |\theta|}
-  $$
-  
+$$Pd \in \mathbb{R}^{d \times |\theta|}$$
   The matrix $Pd$ is used to reduce the high-dimensional parameter space into a lower-dimensional space ($d$ dimensions) to maintain computational efficiency while preserving the essential structure of the gradient.
 
 - **Hessian Approximation Matrix**:
   
-  $$
-  R \in \mathbb{R}^{d \times d}
-  $$
-  
+$$R \in \mathbb{R}^{d \times d}$$
   In this context, $R$ is computed using a combination of evaluations over a held-out dataset (denoted $R_{\text{eval}}$) and the training data (denoted $R_{\text{train}}$):
 
-  $$
-  R = \lambda R_{\text{eval}} + (1 - \lambda) R_{\text{train}}
-  $$
-  
+$$R = \lambda R_{\text{eval}} + (1 - \lambda) R_{\text{train}}$$
   where:
   
   - $R_{\text{eval}}$: The Hessian approximation computed using evaluation data.
@@ -117,19 +97,13 @@ Together, these formulations measure the similarity between training and evaluat
 1. Begin with a training dataset consisting of a pretraining corpus containing over 160B tokens, aiming to specifically trace impactful examples for an 8B-parameter language model.
 2. Use a gradient-based influence method, TrackStar, which follows this formula:
     
-   $$
-   I_\theta(z_m, z_q) = \overline{G}_\theta(z_m) \cdot \overline{G}_\theta(z_q)
-   $$
+$$I_\theta(z_m, z_q) = \overline{G}_\theta(z_m) \cdot \overline{G}_\theta(z_q)$$
 
-   where $\overline{G}_\theta(z)$ is the projected, Hessian-corrected, and unit normalized gradient, computed as:
+where $\overline{G}_\theta(z)$ is the projected, Hessian-corrected, and unit normalized gradient, computed as:
    
-   $$
-   \overline{G}_\theta(z) = \frac{G_\theta(z)}{\|G_\theta(z)\|_2}
-   $$
+$$\overline{G}_\theta(z) = \frac{G_\theta(z)}{\|G_\theta(z)\|_2}$$
 
-   $$
-   G_\theta(z) = R^{-1/2}P_d \frac{\nabla_\theta \text{Loss}(z, \theta)}{\sqrt{V}}
-   $$
+$$G_\theta(z) = R^{-1/2}P_d \frac{\nabla_\theta \text{Loss}(z, \theta)}{\sqrt{V}}$$
 
    Here, $R$ is a task-specific Hessian approximation, $P_d$ is a random projection matrix, and $\sqrt{V}$ is a second moment estimate.
 3. For each training example $z_m$ and a query example $z_q$, compute the influence score using the gradients of their respective model losses, leveraged with task-specific corrections based on previous analyses.
