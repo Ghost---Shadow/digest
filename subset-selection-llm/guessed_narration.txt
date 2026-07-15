@@ -1,0 +1,627 @@
+================================================================================
+GUESSED NARRATION — v6 (recalibrated from actual narrations, ~45 min)
+================================================================================
+Format: ON SLIDE  |  NARRATION (what you'd say aloud)
+        [-->]     =  segue into the next slide
+================================================================================
+
+
+SLIDE 1 — Title
+--------------------------------------------------------------------------------
+ON SLIDE: Title, name, student ID.
+
+NARRATION:
+[Nothing — title speaks for itself.]
+
+
+================================================================================
+SLIDE 2 — Contents
+--------------------------------------------------------------------------------
+ON SLIDE: Three sections — ICL, RAG, Subset Selection in LLMs.
+
+NARRATION:
+"Three parts. First I need to set up two ideas — how models learn from
+examples at test time, and how we retrieve those examples. That leads
+into the main topic, which is selecting the best subset."
+
+
+================================================================================
+SLIDE 3 — What is In-Context Learning for LLMs?
+--------------------------------------------------------------------------------
+ON SLIDE: Toy example — context with Jack/Jill QA pairs, question, answer.
+
+NARRATION:
+"In-context learning allows us to inject knowledge into the LLM that
+it has not seen during training. Here, Jack has an apple and Jill has
+a ball — when prompted about Jack, it returns apple, and when prompted
+about Jill, it returns ball."
+
+ACTUAL NARRATION:
+"In context learning allows us to inject knowledge in the LLM that it has not
+seen in prior training, as an example, Jack has an apple and Jill has a ball,
+when prompted about Jack, it returns apple and when prompted about Jill, it returns
+a ball"
+
+
+================================================================================
+SLIDE 4 — Larger Models Scale Better for ICL (1/2)
+--------------------------------------------------------------------------------
+ON SLIDE: Three translation examples — zero/one/two-shot, French outputs
+improving progressively. Citation in footer.
+
+NARRATION:
+"In-context learning can be thought of as a smart copy-and-paste. As
+we go from zero-shot to one-shot to two-shot, the model has more to
+learn from. The zero-shot output is nonsense, one-shot gets the idea
+right, and two-shot gets it almost correct."
+
+ACTUAL NARRATION:
+In context learning can be thought as a smart copy and paste. As the model
+scales up in shots like zero shot, one shot and two shot. It gets more things to learn
+or copy from. The first one is nonsense, "I would like to give back the future of Paris"
+One shot gets the idea right and finally two shot gets almost right.
+
+================================================================================
+SLIDE 5 — Larger Models Scale Better for ICL (2/2)
+--------------------------------------------------------------------------------
+ON SLIDE: GPT-3 scaling plot — accuracy vs. K for 1.3B / 13B / 175B.
+Three clearly separated curves.
+
+NARRATION:
+"Larger models climb quickly before hitting diminishing returns, while
+smaller models barely improve at all."
+
+ACTUAL NARRATION:
+Here we see that larger climb quickly before hitting diminishing returns,
+while smaller models take much longer.
+
+================================================================================
+SLIDE 6 — Chain of Thought (1/3)
+--------------------------------------------------------------------------------
+ON SLIDE: Side-by-side — standard prompting (wrong, red X) vs. CoT
+prompting (intermediate reasoning steps highlighted, correct, checkmark).
+
+NARRATION:
+"Same question, same model. On the left we just give the answer in
+the demonstration, and the model gets it wrong. On the right we include
+the reasoning steps, highlighted in blue, and now it gets it right.
+The only change is the format of the demonstration."
+
+
+================================================================================
+SLIDE 7 — CoT: Scaling (2/3)
+--------------------------------------------------------------------------------
+ON SLIDE: Four plots — letter concat and coin flip (in-domain and OOD).
+Standard (black) vs. CoT (blue) across 8B / 62B / 540B. Text describing
+the two symbolic reasoning tasks.
+
+NARRATION:
+"Two symbolic tasks — letter concatenation and coin flip. The black
+line is standard prompting, the blue line is chain-of-thought. At 8
+billion parameters there is almost no difference, but at 540 billion
+chain-of-thought pulls away dramatically, especially on the
+out-of-distribution variants."
+
+
+================================================================================
+SLIDE 8 — CoT: Self-consistency (3/3)
+--------------------------------------------------------------------------------
+ON SLIDE: Figure showing multiple reasoning paths sampled, then majority
+vote for the final answer.
+
+NARRATION:
+"Instead of sampling one chain, sample many and take a majority vote.
+Correct reasoning tends to converge, errors are random, so the vote
+filters them out. No extra training required."
+
+[--> "So ICL works and it scales. But what are the demonstrations
+actually doing inside the model?"]
+
+
+================================================================================
+SLIDE 9 — Why does ICL work?
+--------------------------------------------------------------------------------
+ON SLIDE: Three images — (1) decomposition of demonstrations into
+components (input distribution, label space, format, input-label mapping),
+(2) ablation figure showing gold vs. random labels, (3) text noting
+experiments limited to classification/multi-choice.
+
+NARRATION:
+"This is the surprising result. They deliberately gave wrong labels in
+the demonstrations, and ICL still mostly worked. The model uses the
+demonstrations to identify the task — the format, the label space, the
+distribution of inputs — more than to learn the actual mapping. It is
+activating knowledge it already has, not learning new knowledge from
+the examples.
+
+One caveat — these experiments are limited to classification and
+multi-choice. For generation tasks the labels may matter more."
+
+
+================================================================================
+SLIDE 10 — Certain Compute Scale is Required
+--------------------------------------------------------------------------------
+ON SLIDE: Four panels showing emergent abilities — math, instruction
+following, 8-digit addition, calibration. All show phase transitions.
+
+NARRATION:
+"Same story across many different capabilities. Below a certain compute
+scale, the ability is essentially absent, and then it appears abruptly.
+These are emergent abilities — they require a minimum threshold of
+model capacity."
+
+[--> "So if we are working with these large expensive models, we want
+to be smart about what we feed them. Which means we need a retrieval
+mechanism."]
+
+
+================================================================================
+SLIDE 11 — Contents (transition)
+--------------------------------------------------------------------------------
+ON SLIDE: Same three sections, RAG now highlighted.
+
+NARRATION:
+[Pause — visual checkpoint.]
+
+
+================================================================================
+SLIDE 12 — Core Idea of RAG
+--------------------------------------------------------------------------------
+ON SLIDE: Diagram — question on left, parametric knowledge (model) in
+center, non-parametric documents on right. Arrows showing retrieval
+and data incorporation.
+
+NARRATION:
+"Two knowledge sources. On one side is what the model has memorized in
+its weights — parametric knowledge. On the other side are external
+documents — non-parametric knowledge. The retriever connects them by
+fetching relevant documents and incorporating them into the context."
+
+
+================================================================================
+SLIDE 13 — Core Idea of RAG (animated)
+--------------------------------------------------------------------------------
+ON SLIDE: Same diagram with animation steps.
+
+NARRATION:
+[Stepping through the animation.]
+
+
+================================================================================
+SLIDE 14 — MIPS (1/3)
+--------------------------------------------------------------------------------
+ON SLIDE: Documents and queries shown with their embedding vectors.
+LLM Embedding block. Citation in footer.
+
+NARRATION:
+"We embed both the documents and the queries into a shared vector
+space using an LLM encoder. Once everything is in the same space,
+retrieval becomes a nearest-neighbor problem."
+
+
+================================================================================
+SLIDE 15 — MIPS (2/3)
+--------------------------------------------------------------------------------
+ON SLIDE: Inner product score matrix — Jack's doc scores 0.9 with Jack's
+question, 0.3 with Jill's. Cross scores shown.
+
+NARRATION:
+"We take the inner product between each document embedding and each
+query embedding. Jack's document scores 0.9 against Jack's question
+and 0.3 against Jill's question. The relevant pairs score high, the
+irrelevant ones score low."
+
+
+================================================================================
+SLIDE 16 — MIPS (3/3)
+--------------------------------------------------------------------------------
+ON SLIDE: Bi-encoder equation — p_eta(z|x) proportional to exp(d(z)^T q(x)),
+d = BERT_d(z), q = BERT_q(x). Document = z, Query = x.
+
+NARRATION:
+"This formalizes it. Two separate BERT encoders — one for documents,
+one for queries. The retrieval probability is proportional to the
+exponentiated inner product. The practical advantage is that document
+embeddings can be precomputed, so at query time you only encode the
+query and do a fast search."
+
+
+================================================================================
+SLIDE 17 — End-to-End Training
+--------------------------------------------------------------------------------
+ON SLIDE: RAG-Token formula with color-coded annotations — ground truth
+(green), query (blue), document (red), next token, tokens so far.
+
+NARRATION:
+"For each output token, the model marginalizes over the top-k retrieved
+documents. The color coding breaks it down — green is ground truth,
+blue is the query, red is the retrieved document. The whole pipeline
+is differentiable, so the retriever and generator train jointly."
+
+[--> "But this assumes the retriever is already reasonable. What if it
+is not?"]
+
+
+================================================================================
+SLIDE 18 — Questions Are All You Need (1/4)
+--------------------------------------------------------------------------------
+ON SLIDE: Document with score 0.6 against query, 0.3 against unrelated.
+
+NARRATION:
+"Starting point — the retriever gives a score of 0.6 for the correct
+document. Not bad, but not great either."
+
+
+================================================================================
+SLIDE 19 — Questions Are All You Need (2/4)
+--------------------------------------------------------------------------------
+ON SLIDE: LLM generates a better query, now scores 0.9.
+
+NARRATION:
+"Now we bring in an LLM to generate a better query. With the improved
+query the score jumps to 0.9. The LLM understands relevance better
+than the retriever does."
+
+
+================================================================================
+SLIDE 20 — Questions Are All You Need (3/4)
+--------------------------------------------------------------------------------
+ON SLIDE: Same diagram + text about distilling to the retriever.
+
+NARRATION:
+"But running the LLM at query time for every retrieval is too expensive.
+So we distill — train the retriever to mimic the LLM's judgments."
+
+
+================================================================================
+SLIDE 21 — Questions Are All You Need (4/4)
+--------------------------------------------------------------------------------
+ON SLIDE: KL divergence loss formula — teacher (LLM inner product) vs.
+student (retriever inner product). Color annotations.
+
+NARRATION:
+"The loss is a KL divergence between the LLM's relevance scores and
+the retriever's scores. After training, the retriever approximates
+the LLM's ranking at a fraction of the cost. This distillation pattern
+— expensive oracle to cheap surrogate — keeps coming back."
+
+[--> "There is another practical problem. As you train the retriever,
+the document embeddings in the index go stale."]
+
+
+================================================================================
+SLIDE 22 — Negative Cache (1/3)
+--------------------------------------------------------------------------------
+ON SLIDE: Title + three motivation bullets. "This is paper from Google."
+"Can we keep updating the non-parametric index while training?"
+
+NARRATION:
+"This is from Google. The problem is that every time you update the
+encoder weights, all the cached document embeddings become slightly
+out of date. Re-embedding the entire corpus each time is not feasible.
+And at Google's scale, the documents themselves are also changing."
+
+
+================================================================================
+SLIDE 23 — Negative Cache (2/3)
+--------------------------------------------------------------------------------
+ON SLIDE: Seven-step training flow in bullet points (query/doc network,
+cache search, backprop, cache refresh).
+
+NARRATION:
+"The training flow is on the slide. The key idea is that they keep a
+cache of old embeddings. They search the cache for hard negatives, do
+the backprop, and then refresh a small portion of the cache each step
+rather than recomputing everything."
+
+
+================================================================================
+SLIDE 24 — Negative Cache (3/3)
+--------------------------------------------------------------------------------
+ON SLIDE: "Core Idea" text — stale embeddings are analogous to noised
+current queries. Gradient formula with +ve (green) and -ve (red).
+Training flow repeated.
+
+NARRATION:
+"Here is the nice part. They show that stale embeddings from a
+previous checkpoint are mathematically equivalent to adding noise to
+the current embeddings. So the staleness is actually acting as a form
+of regularization — it helps rather than hurts."
+
+
+================================================================================
+SLIDE 25 — RETRO (1/2)
+--------------------------------------------------------------------------------
+ON SLIDE: Three-panel scaling figure — performance vs. model size, vs.
+retrieval DB size, vs. number of neighbors. Caption about 10x model
+size equivalence.
+
+NARRATION:
+"RETRO does retrieval at trillion-token scale. Three panels here — the
+takeaway is that retrieval gives you roughly a 10x multiplier in
+effective model size. A small model with good retrieval performs like a
+model ten times larger without it."
+
+
+================================================================================
+SLIDE 26 — RETRO (2/2)
+--------------------------------------------------------------------------------
+ON SLIDE: Same figure, possibly annotated. Red trend lines visible.
+
+NARRATION:
+"But look at the rightmost panel — beyond about 40 neighbors,
+performance actually starts to degrade. More retrieval is not always
+better. At some point the extra documents add noise rather than useful
+information. Which motivates being selective about what you retrieve."
+
+[--> "One more retrieval approach before we move on."]
+
+
+================================================================================
+SLIDE 27 — Neural Corpus Indexer
+--------------------------------------------------------------------------------
+ON SLIDE: Five bullets — embed, hierarchical k-means, generate semantic
+doc IDs, train LLM to output doc_id given a question.
+
+NARRATION:
+"Completely different paradigm. Instead of searching an index, the
+model memorizes the index. You embed the documents, cluster them
+hierarchically, and assign each document an ID based on its position
+in the cluster tree. Then you train the model to directly output the
+document ID given a question. Retrieval becomes generation — no
+nearest-neighbor search at all."
+
+[--> "So we have multiple ways to retrieve documents. But a ranked
+list is not the same as the best subset."]
+
+
+================================================================================
+SLIDE 28 — Contents (transition)
+--------------------------------------------------------------------------------
+ON SLIDE: Three sections, subset selection now highlighted.
+
+NARRATION:
+[Pause.]
+
+
+================================================================================
+SLIDE 29 — Core Idea of Subset Selection (1/2)
+--------------------------------------------------------------------------------
+ON SLIDE: RAG diagram with an additional "subset selection" step between
+longlist (4 docs) and shortlist (2 docs).
+
+NARRATION:
+"Now there is a new step between retrieval and generation. The
+retriever gives us a longlist of four documents. Subset selection
+narrows it down to the two that will actually help the model."
+
+
+================================================================================
+SLIDE 30 — Core Idea of Subset Selection (2/2)
+--------------------------------------------------------------------------------
+ON SLIDE: Same diagram, animated.
+
+NARRATION:
+[Animation stepping through.]
+
+
+================================================================================
+SLIDE 31 — Core Idea of Subset Selection (ICL variant)
+--------------------------------------------------------------------------------
+ON SLIDE: Longlist of QA pairs -> subset selection -> shortlist of QA
+pairs fed as demonstrations. Model answers multiple questions.
+
+NARRATION:
+"Same idea but for in-context learning. We have a longlist of QA pairs
+as candidate demonstrations, and we select a shortlist that gets fed
+into the model. The difference here is that the selected demonstrations
+need to help across multiple test questions, not just one."
+
+[--> "So what makes a good demonstration?"]
+
+
+================================================================================
+SLIDE 32 — What makes a document good?
+--------------------------------------------------------------------------------
+ON SLIDE: Just the title, otherwise blank.
+
+NARRATION:
+"This is the question. Every paper from here on gives a different
+answer, and they get progressively more sophisticated."
+
+
+================================================================================
+SLIDE 33 — Perplexity / MetaICL
+--------------------------------------------------------------------------------
+ON SLIDE: Three-step algorithm (sample task, sample k+1 examples,
+maximize P(y_{k+1}|...)). Simple figure.
+
+NARRATION:
+"The simplest approach — sample random demonstrations, run them through
+the LLM, and keep the ones that give the highest likelihood on a held-
+out example. Honest and effective, but every evaluation requires an
+LLM call, so it is expensive."
+
+[--> "Can we learn a fast retriever to avoid all those LLM calls?"]
+
+
+================================================================================
+SLIDE 34 — Learning to Retrieve Prompts (EPR)
+--------------------------------------------------------------------------------
+ON SLIDE: Full EPR pipeline figure — unsupervised retriever -> candidate
+prompts -> scoring LM (0.9, 0.5, 0.1) -> positive/negative split ->
+contrastive learning with utterance and prompt encoders. InfoNCE loss.
+
+NARRATION:
+"The pipeline goes left to right. Start with an unsupervised retriever
+to get candidate prompts, score them with the LLM — 0.9, 0.5, 0.1 —
+split into positives and negatives, and train a dense retriever with
+contrastive learning. Same distillation idea we saw earlier with the
+passage retriever, but now applied to selecting ICL demonstrations."
+
+[--> "This still uses the LLM as a black box. Can we be more explicit
+about what makes a good example?"]
+
+
+================================================================================
+SLIDE 35 — Self-Adaptive ICL
+--------------------------------------------------------------------------------
+ON SLIDE: Loss formula with annotations — "Compensation for class
+imbalance" and "Probability of getting the correct answer."
+
+NARRATION:
+"Now the selection criterion is decomposed. The loss has two parts —
+the red annotation on the left is a correction for class imbalance,
+and the one on the right is the probability of getting the correct
+answer. Instead of a single accuracy number, we have two separate
+signals telling us different things about why an example helps."
+
+[--> "But we are still scoring each example on its own. What if the
+value of an example depends on what else is in the context?"]
+
+
+================================================================================
+SLIDE 36 — LENS (1/2)
+--------------------------------------------------------------------------------
+ON SLIDE: Pairwise formula c(e, e') with color annotations — "shot,"
+"prompt," probabilities in 0-shot vs. 1-shot settings.
+
+NARRATION:
+"Now it is pairwise. This formula measures how much adding one
+specific shot improves the prediction on one specific test point,
+compared to the zero-shot baseline. So every candidate gets a score
+against every test example — it is a full interaction matrix, not a
+single number per candidate."
+
+
+================================================================================
+SLIDE 37 — LENS (2/2)
+--------------------------------------------------------------------------------
+ON SLIDE: InfoScore formula + diversity-guided selection formula with
+quality (orange) and diversity (blue) annotations. Lambda tradeoff.
+
+NARRATION:
+"Two objectives. The orange term is quality — pick the most informative
+shot. The blue term is diversity — the new candidate should be
+dissimilar to what we have already picked. Lambda controls the
+tradeoff. This quality-versus-diversity tension is basically the
+central theme of everything that follows."
+
+[--> "What if instead of a greedy tradeoff, we model this as a
+sequential decision?"]
+
+
+================================================================================
+SLIDE 38 — Active Example Selection
+--------------------------------------------------------------------------------
+ON SLIDE: Reward function r(s,a) with annotations. Q-learning formula
+Q*(s,a). Two small figures.
+
+NARRATION:
+"Now it is reinforcement learning. The state is the current set of
+demonstrations, the action is which shot to add next, and the reward
+is the marginal improvement. The Q-learning formulation captures
+something greedy methods miss — a shot that looks weak on its own
+might set up the context perfectly for the next one."
+
+[--> "There is a cleaner way to handle quality and diversity together."]
+
+
+================================================================================
+SLIDE 39 — CEIL (1/2)
+--------------------------------------------------------------------------------
+ON SLIDE: DPP formula P(S) with bullet explanations of each variable.
+
+NARRATION:
+"Determinantal Point Processes. The first term is quality — how
+similar each selected item is to the query. The second term is the
+log-determinant, which encodes diversity. If you pick two similar items
+the determinant shrinks, so the model naturally pushes for spread. No
+lambda to tune — quality and diversity in one unified formula."
+
+
+================================================================================
+SLIDE 40 — CEIL (2/2)
+--------------------------------------------------------------------------------
+ON SLIDE: Four bullets — embed, find n similar, check LLM likelihood,
+split into S+/S-, train with contrastive loss. Loss formula shown.
+
+NARRATION:
+"Training is end-to-end. For each query, find the n most similar
+documents, check their likelihood with the LLM, split into top half
+and bottom half. The contrastive loss trains the embedding space so
+that the DPP kernel learns what helpful-and-diverse looks like."
+
+[--> "All these methods rely on the LLM for scoring. Can we do it
+without the LLM entirely?"]
+
+
+================================================================================
+SLIDE 41 — Selective Annotation
+--------------------------------------------------------------------------------
+ON SLIDE: Graph/network figure. Text about voting with exponential decay.
+
+NARRATION:
+"Graph-based method, completely different philosophy. Build a graph
+over the documents. Each document casts votes for its neighbors, but
+the more votes it casts, the weaker each vote gets — exponential decay.
+This prevents any single hub document from dominating and naturally
+spreads the selection across different regions."
+
+[--> "Can we combine this graph intuition with the DPP idea?"]
+
+
+================================================================================
+SLIDE 42 — Two-Stage DPP
+--------------------------------------------------------------------------------
+ON SLIDE: Pipeline figure — D -> SBERT -> L_S -> DPP -> D_sem. Then
+influence scores -> Q -> I -> L_I -> DPP -> D_dem. Multiple formulas.
+
+NARRATION:
+"Two stages, two DPPs. First DPP uses semantic similarity to get a
+diverse candidate set. Then compute influence scores for each
+candidate — how much does it help? — build a new kernel from those
+scores, and run a second DPP. First stage gives you coverage, second
+stage gives you quality."
+
+
+================================================================================
+SLIDE 43 — IDEAL
+--------------------------------------------------------------------------------
+ON SLIDE: Five bullets — all-to-all similarity, seed set, top-K expansion,
+acceptance probability inversely proportional to similarity.
+
+NARRATION:
+"Start with a seed set, find the most similar items, but add them
+back with probability inversely proportional to how similar they are
+to what you already have. So if something is very close to an existing
+selection it is unlikely to be added. The expansion naturally spreads
+out rather than collapsing into one cluster."
+
+[--> "And one last idea that keeps showing up in recent work."]
+
+
+================================================================================
+SLIDE 44 — Selection Via Proxy
+--------------------------------------------------------------------------------
+ON SLIDE: Four bullets — least confidence, train proxy, rank by proxy
+scores (forgetting events, uncertainty), select subset.
+
+NARRATION:
+"Instead of scoring with the expensive target model, train a small
+cheap proxy model and use it to rank. Score by things like forgetting
+events or uncertainty, and select the top subset. Surprisingly
+effective, and this proxy idea has become very common in recent data
+selection work for both pre-training and fine-tuning."
+
+
+================================================================================
+SLIDES 45-48 — References
+--------------------------------------------------------------------------------
+ON SLIDE: ~20 paper references across four slides.
+
+NARRATION:
+"Happy to take questions."
+
+
+================================================================================
